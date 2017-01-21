@@ -8,7 +8,7 @@ Targeting::Targeting() :
 {
 	NetworkTable::SetClientMode();
 	NetworkTable::SetIPAddress("roborio-5268-frc.local");
-	NetworkTable::SetUpdateRate(0.2);
+	NetworkTable::SetUpdateRate(.2);
 	gripTable = NetworkTable::GetTable("grip");
 }
 

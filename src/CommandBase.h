@@ -8,6 +8,7 @@
 #include "Subsystems/Drive.h"
 #include "Subsystems/LEDController.h"
 #include "Subsystems/Targeting.h"
+#include "Subsystems/Lift.h"
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -25,6 +26,7 @@ public:
 	static std::unique_ptr<Drive> drive;
 	static std::unique_ptr<LEDController> leds;
 	static std::unique_ptr<Targeting> targeting;
+	static std::unique_ptr<Lift> lift;
 };
 
 #endif

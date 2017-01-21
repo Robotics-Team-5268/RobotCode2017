@@ -5,10 +5,10 @@
 #include "../RobotMap.h"
 
 Drive::Drive() : Subsystem("Drive"){
-    speedController1 = RobotMap::driveSpeedController1;
-    speedController2 = RobotMap::driveSpeedController2;
-    speedController3 = RobotMap::driveSpeedController3;
-    speedController4 = RobotMap::driveSpeedController4;
+    speedController1 = RobotMap::speedControllerFL;
+    speedController2 = RobotMap::speedControllerFR;
+    speedController3 = RobotMap::speedControllerBL;
+    speedController4 = RobotMap::speedControllerBR;
     robotDrive4 = RobotMap::driveRobotDrive4;
     //speedController1->SetInverted(true);
     //speedController2->SetInverted(true);
@@ -34,12 +34,10 @@ void Drive::InitDefaultCommand() {
 void Drive::takeInput(){
 	float X = -CommandBase::oi->getDriverJoystick()->GetX();
 	float Y = -CommandBase::oi->getDriverJoystick()->GetY();
+	float rotateAmt = CommandBase::oi->getDriverJoystick()->GetRawAxis(LEFT_TRIGGER) - CommandBase::oi->getDriverJoystick()->GetRawAxis(RIGHT_TRIGGER);
 
-	if (CommandBase::oi->getDriverButtonPressed(1)) {
-		robotDrive4->ArcadeDrive(2*Y/3, X);
-		return;
-	}
-	robotDrive4->ArcadeDrive(Y, X);
+
+	robotDrive4->MecanumDrive_Cartesian(X, Y, rotateAmt);
 }
 void Drive::setMotors(float leftSpeed, float rightSpeed){
 	speedController1->Set(-rightSpeed);

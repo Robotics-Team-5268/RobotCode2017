@@ -2,19 +2,19 @@
 #ifndef ROBOTMAP_H
 #define ROBOTMAP_H
 #include "WPILib.h"
-
-#define DRIVE_SPEED_CONTROLLER_1_CHANNEL 		0   //right
-#define DRIVE_SPEED_CONTROLLER_2_CHANNEL 		1   //right
-#define DRIVE_SPEED_CONTROLLER_3_CHANNEL 		2   //left
-#define DRIVE_SPEED_CONTROLLER_4_CHANNEL 		3	//left
-#define GYRO_SPI_PORT 							SPI::kOnboardCS0
+#include "RobotParameters.h"
 
 class RobotMap {
 public:
-	static std::shared_ptr<SpeedController> driveSpeedController1;
-	static std::shared_ptr<SpeedController> driveSpeedController2;
-	static std::shared_ptr<SpeedController> driveSpeedController3;
-	static std::shared_ptr<SpeedController> driveSpeedController4;
+	static std::shared_ptr<SpeedController> speedControllerFL; // Front Left
+	static std::shared_ptr<SpeedController> speedControllerFR; // Front Right
+	static std::shared_ptr<SpeedController> speedControllerBL; // Back Left
+	static std::shared_ptr<SpeedController> speedControllerBR; // Back Right
+
+	static std::shared_ptr<SpeedController> speedControllerLift1; // Guess what these are for.
+	static std::shared_ptr<SpeedController> speedControllerLift2;
+	// Change ports of Speed Controllers to match positions of motors on Robot
+
 	static std::shared_ptr<RobotDrive> driveRobotDrive4;
 	static std::shared_ptr<ADXRS450_Gyro>driveGyro;
 
