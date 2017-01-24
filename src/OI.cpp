@@ -4,8 +4,8 @@
 #include "Commands/Rotate.h"
 #include "Commands/Move.h"
 #include "Commands/LED.h"
+#include "Commands/LiftWithButton.h"
 #include "SmartDashboard/SmartDashboard.h"
-
 
 OI::OI() {
     // Process operator interface input here.
@@ -20,6 +20,8 @@ OI::OI() {
     driverBtns[1]->WhenPressed(new LED(1));
     driverBtns[2]->WhenPressed(new LED(2));
     driverBtns[3]->WhenPressed(new LED(3));
+
+    shooterBtns[1]->WhenPressed(new LiftWithButton());
 
     // SmartDashboard Buttons
     SmartDashboard::PutData("Rotate", new Rotate(90));

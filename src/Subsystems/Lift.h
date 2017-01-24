@@ -17,6 +17,7 @@ public:
 	Lift();
 
 	void setMotors(float speed);
+	void takeInput();
 };
 
 #endif  // Lift_H
