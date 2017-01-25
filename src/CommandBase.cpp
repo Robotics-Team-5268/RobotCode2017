@@ -5,8 +5,9 @@
 std::unique_ptr<OI> CommandBase::oi;
 std::unique_ptr<Drive> CommandBase::drive;
 std::unique_ptr<LEDController> CommandBase::leds;
-std::unique_ptr<Targeting> CommandBase::targeting;
 std::unique_ptr<Lift> CommandBase::lift;
+std::unique_ptr<Sighting> CommandBase::sighting;
+
 
 CommandBase::CommandBase(const std::string &name) :
 		Command(name)
@@ -23,9 +24,8 @@ void CommandBase::init()
 {
 	drive.reset(new Drive());
 	leds.reset(new LEDController());
-	targeting.reset(new Targeting());
 	lift.reset(new Lift());
-
+	sighting.reset(new Sighting());
 	// Keep at the end
 	oi.reset(new OI());
 }
