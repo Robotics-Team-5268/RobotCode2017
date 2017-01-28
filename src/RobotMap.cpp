@@ -20,6 +20,8 @@ std::shared_ptr<Relay> RobotMap::ledRelay2;
 std::shared_ptr<Relay> RobotMap::ledRelay3;
 std::shared_ptr<Relay> RobotMap::ledRelay4;
 
+std::shared_ptr<Sighting> sighting;
+
 void RobotMap::init() {
     LiveWindow *lw = LiveWindow::GetInstance();
 

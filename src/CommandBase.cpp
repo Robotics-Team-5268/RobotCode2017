@@ -8,7 +8,6 @@ std::unique_ptr<LEDController> CommandBase::leds;
 std::unique_ptr<Lift> CommandBase::lift;
 std::unique_ptr<Sighting> CommandBase::sighting;
 
-
 CommandBase::CommandBase(const std::string &name) :
 		Command(name)
 {

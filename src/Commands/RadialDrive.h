@@ -5,7 +5,7 @@
 #include "../Subsystems/Sighting.h"
 #include "../RobotMap.h"
 
-class RadialDrive : public CommandBase {
+class RadialDrive : public CommandBase, public PIDOutput {
 public:
 	RadialDrive(double rotateAmt, double spd);
 	RadialDrive(double spd);
@@ -17,15 +17,9 @@ public:
 	double rotate;
 	double speed;
 	PIDController* pid;
-};
-class RadialPIDOutput: public PIDOutput
-{
+	void PIDWrite(double output);
 private:
 	std::shared_ptr<ADXRS450_Gyro> gyro;
-public:
-	void PIDWrite(double output);
-
-	double speed;
 };
 
 #endif  // RadialDrive_H

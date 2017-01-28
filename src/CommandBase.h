@@ -27,7 +27,6 @@ public:
 	static std::unique_ptr<LEDController> leds;
 	static std::unique_ptr<Lift> lift;
 	static std::unique_ptr<Sighting> sighting;
-
 };
 
 #endif

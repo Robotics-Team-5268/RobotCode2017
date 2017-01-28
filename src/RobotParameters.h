@@ -14,6 +14,9 @@
 //#define GYRO_SPI_PORT 							SPI::kOnboardCS0_
 #define GYRO_ANALOG_PORT 0
 
+#define CAMERA_XRES 1280
+#define CAMERA_YRES 720
+
 #define RIGHT_TRIGGER 3
 #define LEFT_TRIGGER 2
 
