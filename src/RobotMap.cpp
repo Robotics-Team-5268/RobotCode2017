@@ -10,6 +10,8 @@ std::shared_ptr<SpeedController> RobotMap::speedControllerLift1;
 std::shared_ptr<SpeedController> RobotMap::speedControllerLift2;
 std::shared_ptr<RobotDrive> RobotMap::driveRobotDrive4;
 
+std::shared_ptr<Sighting> RobotMap::sighting;
+
 std::shared_ptr<ADXRS450_Gyro> RobotMap::driveGyro;
 
 std::shared_ptr<Relay> RobotMap::ledRelay1;
@@ -40,6 +42,7 @@ void RobotMap::init() {
 
     driveRobotDrive4.reset(new RobotDrive(speedControllerFL, speedControllerBL,
               speedControllerFR, speedControllerBR));
+    sighting.reset(new Sighting());
     
     driveRobotDrive4->SetSafetyEnabled(false);
 	driveRobotDrive4->SetExpiration(0.1);

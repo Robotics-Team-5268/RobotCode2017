@@ -3,6 +3,7 @@
 #define ROBOTMAP_H
 #include "WPILib.h"
 #include "RobotParameters.h"
+#include "Subsystems/Sighting.h"
 
 class RobotMap {
 public:
@@ -22,6 +23,8 @@ public:
 	static std::shared_ptr<Relay> ledRelay2;
 	static std::shared_ptr<Relay> ledRelay3;
 	static std::shared_ptr<Relay> ledRelay4;
+
+	static std::shared_ptr<Sighting> sighting;
 
 	static void init();
 };

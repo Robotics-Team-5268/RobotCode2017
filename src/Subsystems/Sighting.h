@@ -12,7 +12,12 @@ private:
 public:
 	Sighting();
 	void InitDefaultCommand();
-	double FindDesiredHeading();
+	double FindBoardAngle();
+	double FindDesiredAngle();
+	bool LeftOrRight();
+	double d1;
+	double d2;
+	double boardAng;
 };
 
 #endif  // Sighting_H

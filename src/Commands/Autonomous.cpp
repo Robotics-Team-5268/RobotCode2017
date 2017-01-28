@@ -2,15 +2,15 @@
 #include "Autonomous.h"
 #include "Commands/Move.h"
 #include "Commands/Rotate.h"
+#include "Commands/RadialDrive.h"
+#include "Robot.h"
 
 Autonomous::Autonomous(int selection) : CommandGroup("Autonomous") {
-	// [AJN] I believe this is necessary to let the WPI code know that
-	// each Subsystem you are going to use is needed by the command so
-	// that it can ensure an instance is constructed.
-	// Requires(Robot::drive.get());
-
 	switch(selection){
 	case 1: //
+		// inside the command, retrieve the values from the subsystem instead
+		// of passing them here.
+		AddSequential(new RadialDrive(0.0));
 		break;
 	case 2: //
 		break;
@@ -19,5 +19,4 @@ Autonomous::Autonomous(int selection) : CommandGroup("Autonomous") {
 	default:
 		break;
 	}
-
 }

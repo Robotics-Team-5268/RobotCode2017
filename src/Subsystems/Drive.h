@@ -12,7 +12,6 @@ private:
 	std::shared_ptr<SpeedController> speedController2;
 	std::shared_ptr<SpeedController> speedController3;
 	std::shared_ptr<SpeedController> speedController4;
-	std::shared_ptr<RobotDrive> robotDrive4;
 
 	std::shared_ptr<ADXRS450_Gyro> gyro;
 public:
@@ -24,6 +23,7 @@ public:
 	void setMotors(float leftSpeed, float rightSpeed);
 	float returnAngle();
 	void takeInput();
+	std::shared_ptr<RobotDrive> robotDrive4;
 };
 
 #endif
