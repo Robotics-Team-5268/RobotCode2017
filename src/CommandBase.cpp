@@ -7,6 +7,7 @@ std::unique_ptr<Drive> CommandBase::drive;
 std::unique_ptr<LEDController> CommandBase::leds;
 std::unique_ptr<Lift> CommandBase::lift;
 std::unique_ptr<Sighting> CommandBase::sighting;
+std::unique_ptr<NetTable> CommandBase::nettablelistener;
 
 
 CommandBase::CommandBase(const std::string &name) :
