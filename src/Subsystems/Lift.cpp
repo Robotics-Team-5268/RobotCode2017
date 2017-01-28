@@ -10,7 +10,7 @@ Lift::Lift() : Subsystem("Lift") {
 void Lift::takeInput(){
 	bool buttonA = CommandBase::oi->getShooterButtonPressed(1);
 
-	setMotors((float)buttonA);
+	setMotors(0.6 * (float)buttonA); // we're multiplying by a decimal because buttonA is only 0 or 1
 }
 
 //Both motors move in same direction, so only 1 speed is necessary.
