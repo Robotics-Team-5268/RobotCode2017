@@ -13,7 +13,7 @@ private:
 	std::shared_ptr<SpeedController> speedController3;
 	std::shared_ptr<SpeedController> speedController4;
 
-	std::shared_ptr<ADXRS450_Gyro> gyro;
+	std::shared_ptr<AnalogGyro> gyro;
 public:
 	Drive();
 	void safetyOff(){robotDrive4->SetSafetyEnabled(false);}
