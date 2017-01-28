@@ -12,7 +12,8 @@ std::shared_ptr<RobotDrive> RobotMap::driveRobotDrive4;
 
 std::shared_ptr<Sighting> RobotMap::sighting;
 
-std::shared_ptr<ADXRS450_Gyro> RobotMap::driveGyro;
+// std::shared_ptr<ADXRS450_Gyro> RobotMap::driveGyro;
+std::shared_ptr<AnalogGyro> RobotMap::driveGyro;
 
 std::shared_ptr<Relay> RobotMap::ledRelay1;
 std::shared_ptr<Relay> RobotMap::ledRelay2;
@@ -52,7 +53,8 @@ void RobotMap::init() {
 	speedControllerFL->SetInverted(true);
 	speedControllerBL->SetInverted(true);
 
-    driveGyro.reset(new ADXRS450_Gyro(SPI::kOnboardCS0));
+    // driveGyro.reset(new ADXRS450_Gyro(SPI::kOnboardCS0));
+	driveGyro.reset(new AnalogGyro(GYRO_ANALOG_PORT));
     driveGyro->Calibrate();
     //lw->AddActuator("Drive", "Drive Gyro", driveGyro);
     //shooterSpeedController->SetControlMode(CANSpeedController::kSpeed);
