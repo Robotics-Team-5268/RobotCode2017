@@ -9,7 +9,6 @@
 #include "Subsystems/LEDController.h"
 #include "Subsystems/Lift.h"
 #include "Subsystems/Sighting.h"
-#include "Subsystems/NetTable.h"
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -28,7 +27,6 @@ public:
 	static std::unique_ptr<LEDController> leds;
 	static std::unique_ptr<Lift> lift;
 	static std::unique_ptr<Sighting> sighting;
-	static std::unique_ptr<NetTable> nettablelistener;
 };
 
 #endif

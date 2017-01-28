@@ -40,7 +40,7 @@ void RadialDrive::Execute() {
 								SmartDashboard::GetNumber("D", .01),
 								SmartDashboard::GetNumber("F", 0),
 								drive->getGyro(),
-								new RadialPIDOutput()
+								this
 								);
 			pid->SetInputRange(-180, 180);
 			pid->SetOutputRange(-.75, .75);
@@ -67,12 +67,11 @@ void RadialDrive::Interrupted() {
 
 }
 
-void RadialPIDOutput::PIDWrite(double output) {
+void RadialDrive::PIDWrite(double output) {
 	// double LeftPoint = acos((d1^2 + 8.5^2 - d2^2)/(2 * d1 * KHyp));
 	// double robotToMidPtSquared = d1^2 + KHyp^2 - 2 * d1 * KHyp * cos(LeftPoint)
 	double X = 0.05;
 
-	CommandBase::drive->robotDrive4->MecanumDrive_Cartesian(X, 0.0,
-			RadialDrive::pid->Get());
+	CommandBase::drive->robotDrive4->MecanumDrive_Cartesian(X, 0.0, this->pid->Get());
 	//CommandBase::robotDrive4MecanumDrive_Cartesian(X, 0, boardAng, gyro->GetAngle());
 }
