@@ -73,6 +73,6 @@ void RadialPIDOutput::PIDWrite(double output) {
 	double X = 0.05;
 
 	CommandBase::drive->robotDrive4->MecanumDrive_Cartesian(X, 0.0,
-			CommandBase::sighting->boardAng, gyro->GetAngle());
+			RadialDrive::pid->Get());
 	//CommandBase::robotDrive4MecanumDrive_Cartesian(X, 0, boardAng, gyro->GetAngle());
 }
