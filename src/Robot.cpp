@@ -19,12 +19,6 @@ void Robot::RobotInit() {
 	autonomousChooser->AddObject("Center", new int(2));
 	autonomousChooser->AddObject("Left", new int(3));
 	SmartDashboard::PutData("Autonomous", autonomousChooser.get());
-
-		// We need to run our vision program in a separate Thread.
-		// If not, our robot program will not run
-		std::thread visionThread(VisionThread);
-		visionThread.detach();
-
 }
 
 /**
