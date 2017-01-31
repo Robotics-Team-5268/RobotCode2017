@@ -9,6 +9,7 @@
 #include "Subsystems/LEDController.h"
 #include "Subsystems/Lift.h"
 #include "Subsystems/Sighting.h"
+#include <networktables/NetworkTable.h>
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.

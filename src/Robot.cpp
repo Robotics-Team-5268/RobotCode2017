@@ -15,9 +15,9 @@ void Robot::RobotInit() {
 	//autonomousCommand.reset(new Autonomous());
 
 	autonomousChooser.reset(new SendableChooser<int*>());
-	autonomousChooser->AddDefault("Drive forward", new int(1));
-	autonomousChooser->AddObject("Drive and shoot (lowbar)", new int(2));
-	autonomousChooser->AddObject("Drive forward short", new int(3));
+	autonomousChooser->AddDefault("Right", new int(1));
+	autonomousChooser->AddObject("Center", new int(2));
+	autonomousChooser->AddObject("Left", new int(3));
 	SmartDashboard::PutData("Autonomous", autonomousChooser.get());
 
 		// We need to run our vision program in a separate Thread.
@@ -74,36 +74,5 @@ void Robot::TestPeriodic() {
 }
 void Robot::TestInit(){
 
-}
-void Robot::VisionThread()
-{
-	// Get the USB camera from CameraServer
-	cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
-	// Set the resolution
-	camera.SetResolution(CAMERA_XRES, CAMERA_YRES);
-
-	// Get a CvSink. This will capture Mats from the Camera
-	cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
-	// Setup a CvSource. This will send images back to the Dashboard
-	cs::CvSource outputStream = CameraServer::GetInstance()->PutVideo("Rectangle", CAMERA_XRES, CAMERA_YRES);
-
-	// Mats are very memory expensive. Lets reuse this Mat.
-	cv::Mat mat;
-
-	while (true) {
-		// Tell the CvSink to grab a frame from the camera and put it
-		// in the source mat.  If there is an error notify the output.
-		if (cvSink.GrabFrame(mat) == 0) {
-			// Send the output the error.
-			outputStream.NotifyError(cvSink.GetError());
-			// skip the rest of the current iteration
-			continue;
-		}
-		// Put a rectangle on the image
-		rectangle(mat, cv::Point(100, 100), cv::Point(400, 400),
-				cv::Scalar(255, 255, 255), 5);
-		// Give the output stream a new image to display
-		outputStream.PutFrame(mat);
-	}
 }
 START_ROBOT_CLASS(Robot);
