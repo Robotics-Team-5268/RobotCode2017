@@ -10,7 +10,6 @@ private:
 	// for methods that implement subsystem capabilities
 
 	std::shared_ptr<SpeedController> speedController1;
-	std::shared_ptr<SpeedController> speedController2;
 
 
 public:

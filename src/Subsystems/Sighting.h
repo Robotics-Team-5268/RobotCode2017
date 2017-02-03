@@ -17,7 +17,7 @@ public:
 	double FindDesiredAngle();
 	bool LeftOrRight();
 	double DistanceToTarget();
-	void startTable();
+	void readTable();
 	bool TwoTargetsAvailable();
 	double d1;
 	double d2;

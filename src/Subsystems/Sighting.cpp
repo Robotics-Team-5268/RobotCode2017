@@ -3,7 +3,7 @@
 #include <math.h>
 
 Sighting::Sighting() : Subsystem("Sighting") {
-	startTable();
+	readTable();
 }
 
 void Sighting::InitDefaultCommand() {
@@ -23,9 +23,9 @@ double Sighting::FindBoardAngle() {
 	// this runs through all of the contours
 	// and ensures that they are at similar heights
 	// and that they are similar in area
-	for (int i = 0; i < area.size(); i++) // area.size() gives the number of contours
+	for (uint i = 0; i < area.size(); i++) // area.size() gives the number of contours
 	{
-		for (int j = i + 1; j < area.size(); j++)
+		for (uint j = i + 1; j < area.size(); j++)
 		{
 			if (fabs(centerY[j] - centerY[i]) < Y_ERROR_MARGIN && //Check if within margin of error
 					(area[j] - area[i]) / area[j] < AREA_ERROR_MARGIN)
@@ -60,13 +60,16 @@ bool Sighting::LeftOrRight() {
 	}
 	else { return false; }
 }
+
 double Sighting::DistanceToTarget() {
 	int pixelHeight = 0; // get from countours report
 	return 5 * 480 / (2 * pixelHeight * tan(33.69));
 }
-void Sighting::startTable()
+
+//Update networktable and fill ContoursReport vectors
+void Sighting::readTable()
 {
-	this->networktable = NetworkTable::GetTable("ChangeThisLater");
+	this->networktable = NetworkTable::GetTable("roboRIO-5268-frc.local");
 
 	solidity = networktable->GetNumberArray("solidity", llvm::ArrayRef<double>());
 	area = networktable->GetNumberArray("area", llvm::ArrayRef<double>());

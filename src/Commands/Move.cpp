@@ -18,16 +18,16 @@ void Move::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void Move::Execute() {
 	if(pid){
-		SmartDashboard::PutNumber("Pradial", pid->GetP());
-		SmartDashboard::PutNumber("Iradial", pid->GetI());
-		SmartDashboard::PutNumber("Dradial", pid->GetD());
-		SmartDashboard::PutNumber("Fradial", pid->GetF());
+		SmartDashboard::PutNumber("Pmove", pid->GetP());
+		SmartDashboard::PutNumber("Imove", pid->GetI());
+		SmartDashboard::PutNumber("Dmove", pid->GetD());
+		SmartDashboard::PutNumber("Fmove", pid->GetF());
 	}else{
 		pid = new PIDController(
-							SmartDashboard::GetNumber("Pradial", .03),
-							SmartDashboard::GetNumber("Iradial", .005),
-							SmartDashboard::GetNumber("Dradial", .01),
-							SmartDashboard::GetNumber("Fradial", 0),
+							SmartDashboard::GetNumber("Pmove", .03),
+							SmartDashboard::GetNumber("Imove", .005),
+							SmartDashboard::GetNumber("Dmove", .01),
+							SmartDashboard::GetNumber("Fmove", 0),
 							drive->getGyro(),
 							new MovePIDOutput(speed));
 		pid->SetInputRange(-180, 180);
