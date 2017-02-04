@@ -19,7 +19,7 @@ public:
 	void safetyOff(){robotDrive4->SetSafetyEnabled(false);}
 	void InitDefaultCommand();
 	void AddSmartDashboardItems();
-	ADXRS450_Gyro* getGyro();
+	AnalogGyro* getGyro();
 	void setMotors(float leftSpeed, float rightSpeed);
 	float returnAngle();
 	void takeInput();

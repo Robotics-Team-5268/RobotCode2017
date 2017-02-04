@@ -48,7 +48,7 @@ void Drive::setMotors(float leftSpeed, float rightSpeed){
 float Drive::returnAngle(){
 	return gyro->GetAngle();
 }
-ADXRS450_Gyro* Drive::getGyro()
+AnalogGyro* Drive::getGyro()
 {
 	return gyro.get();
 }

@@ -70,8 +70,7 @@ void RadialDrive::Interrupted() {
 void RadialDrive::PIDWrite(double output) {
 	// double LeftPoint = acos((d1^2 + 8.5^2 - d2^2)/(2 * d1 * KHyp));
 	// double robotToMidPtSquared = d1^2 + KHyp^2 - 2 * d1 * KHyp * cos(LeftPoint)
-	double X = 0.05;
 
-	CommandBase::drive->robotDrive4->MecanumDrive_Cartesian(X, 0.0, this->pid->Get());
+	CommandBase::drive->robotDrive4->MecanumDrive_Cartesian(speed, 0.0, this->pid->Get());
 	//CommandBase::robotDrive4MecanumDrive_Cartesian(X, 0, boardAng, gyro->GetAngle());
 }
