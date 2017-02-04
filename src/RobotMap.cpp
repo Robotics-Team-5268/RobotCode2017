@@ -6,8 +6,7 @@ std::shared_ptr<SpeedController> RobotMap::speedControllerFL;
 std::shared_ptr<SpeedController> RobotMap::speedControllerFR;
 std::shared_ptr<SpeedController> RobotMap::speedControllerBL;
 std::shared_ptr<SpeedController> RobotMap::speedControllerBR;
-std::shared_ptr<SpeedController> RobotMap::speedControllerLift1;
-std::shared_ptr<SpeedController> RobotMap::speedControllerLift2;
+std::shared_ptr<SpeedController> RobotMap::speedControllerLift;
 std::shared_ptr<RobotDrive> RobotMap::driveRobotDrive4;
 
 std::shared_ptr<Sighting> RobotMap::sighting;
@@ -37,11 +36,8 @@ void RobotMap::init() {
     speedControllerBR.reset(new Talon(DRIVE_SPEED_CONTROLLER_BR_CHANNEL));
     lw->AddActuator("Drive", "Speed Controller 4", (Talon&) speedControllerBR);
     
-    speedControllerLift1.reset(new Talon(DRIVE_SPEED_CONTROLLER_LIFT_1_CHANNEL));
-        lw->AddActuator("Lift", "Speed Controller Lift 1", (Talon&) speedControllerLift2);
-
-	speedControllerLift2.reset(new Talon(DRIVE_SPEED_CONTROLLER_LIFT_2_CHANNEL));
-		lw->AddActuator("Lift", "Speed Controller Lift 2", (Talon&) speedControllerLift1);
+    speedControllerLift.reset(new Talon(DRIVE_SPEED_CONTROLLER_LIFT_CHANNEL));
+        lw->AddActuator("Lift", "Speed Controller Lift", (Talon&) speedControllerLift);
 
     driveRobotDrive4.reset(new RobotDrive(speedControllerFL, speedControllerBL,
               speedControllerFR, speedControllerBR));

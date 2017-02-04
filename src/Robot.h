@@ -21,7 +21,6 @@ public:
 	std::shared_ptr<frc::SendableChooser<int*> > autonomousChooser;
 	LiveWindow *lw = LiveWindow::GetInstance();
 
-	static void VisionThread();
 	virtual void RobotInit();
 	virtual void DisabledInit();
 	virtual void DisabledPeriodic();

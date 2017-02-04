@@ -12,8 +12,7 @@ public:
 	static std::shared_ptr<SpeedController> speedControllerBL; // Back Left
 	static std::shared_ptr<SpeedController> speedControllerBR; // Back Right
 
-	static std::shared_ptr<SpeedController> speedControllerLift1; // Guess what these are for.
-	static std::shared_ptr<SpeedController> speedControllerLift2;
+	static std::shared_ptr<SpeedController> speedControllerLift; // Guess what these are for.
 	// Change ports of Speed Controllers to match positions of motors on Robot
 
 	static std::shared_ptr<RobotDrive> driveRobotDrive4;
