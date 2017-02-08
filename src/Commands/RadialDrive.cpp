@@ -6,6 +6,7 @@ RadialDrive::RadialDrive(double rotateAmt, double spd) {
 	Command::Requires(drive.get());
 	Command::Requires(sighting.get());
 	pid = nullptr;
+	pid2 = nullptr;
 	speed = spd;
 	rotate = rotateAmt;
 }
@@ -16,6 +17,7 @@ RadialDrive::RadialDrive(double spd) {
 	Command::Requires(drive.get());
 	Command::Requires(sighting.get());
 	pid = nullptr;
+	pid2 = nullptr;
 	speed = spd;
 	rotate = sighting->FindDesiredAngle();
 }
@@ -48,6 +50,27 @@ void RadialDrive::Execute() {
 			pid->Enable();
 			pid->SetSetpoint(rotate);
 		}
+	if(pid2){
+				SmartDashboard::PutNumber("P", pid2->GetP());
+				SmartDashboard::PutNumber("I", pid2->GetI());
+				SmartDashboard::PutNumber("D", pid2->GetD());
+				SmartDashboard::PutNumber("F", pid2->GetF());
+			}else{
+				pid2 = new PIDController(
+									SmartDashboard::GetNumber("P", .03),
+									SmartDashboard::GetNumber("I", .005),
+									SmartDashboard::GetNumber("D", .01),
+									SmartDashboard::GetNumber("F", 0),
+									drive->getGyro(),
+									new RadialDrivePIDOutput()
+									);
+				pid2->SetInputRange(-180, 180);
+				pid2->SetOutputRange(-.75, .75);
+				pid2->SetAbsoluteTolerance(3);
+				pid2->Enable();
+				pid2->SetSetpoint(speed);
+			}
+	CommandBase::drive->robotDrive4->MecanumDrive_Cartesian(pid2->Get(), 0.0, pid->Get());
 
 }
 
@@ -70,8 +93,14 @@ void RadialDrive::Interrupted() {
 void RadialDrive::PIDWrite(double output) {
 	// double LeftPoint = acos((d1^2 + 8.5^2 - d2^2)/(2 * d1 * KHyp));
 	// double robotToMidPtSquared = d1^2 + KHyp^2 - 2 * d1 * KHyp * cos(LeftPoint)
-	double X = 0.05;
 
-	CommandBase::drive->robotDrive4->MecanumDrive_Cartesian(X, 0.0, this->pid->Get());
 	//CommandBase::robotDrive4MecanumDrive_Cartesian(X, 0, boardAng, gyro->GetAngle());
+}
+
+void RadialDrivePIDOutput::PIDWrite(double output){
+	int speed = output;
+
+}
+double RadialDrivePIDOutput::PIDGet(){
+
 }

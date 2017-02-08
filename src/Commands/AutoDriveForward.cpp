@@ -5,6 +5,10 @@ AutoDriveForward::AutoDriveForward() {
 	// eg. Requires(Robot::chassis.get());
 }
 
+AutoDriveForward::~AutoDriveForward(){
+	delete pidAngle;
+}
+
 // Called just before this Command runs the first time
 void AutoDriveForward::Initialize() {
 

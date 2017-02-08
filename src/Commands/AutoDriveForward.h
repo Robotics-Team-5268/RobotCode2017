@@ -8,6 +8,7 @@
 class AutoDriveForward : public CommandBase, public PIDOutput, public PIDSource {
 public:
 	AutoDriveForward();
+	virtual ~AutoDriveForward();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

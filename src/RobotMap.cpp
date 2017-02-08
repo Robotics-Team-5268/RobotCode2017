@@ -1,6 +1,7 @@
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 #include "PIDController.h"
+#include "CANTalon.h"
 
 std::shared_ptr<SpeedController> RobotMap::speedControllerFL;
 std::shared_ptr<SpeedController> RobotMap::speedControllerFR;
@@ -24,20 +25,20 @@ std::shared_ptr<Sighting> sighting;
 void RobotMap::init() {
     LiveWindow *lw = LiveWindow::GetInstance();
 
-    speedControllerFL.reset(new Talon(DRIVE_SPEED_CONTROLLER_FL_CHANNEL));
-    lw->AddActuator("Drive", "Speed Controller 1", (Talon&) speedControllerFL);
+    speedControllerFL.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_FL_CHANNEL));
+    lw->AddActuator("Drive", "Speed Controller 1", (CANTalon&) speedControllerFL);
     
-    speedControllerFR.reset(new Talon(DRIVE_SPEED_CONTROLLER_FR_CHANNEL));
-    lw->AddActuator("Drive", "Speed Controller 2", (Talon&) speedControllerFR);
+    speedControllerFR.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_FR_CHANNEL));
+    lw->AddActuator("Drive", "Speed Controller 2", (CANTalon&) speedControllerFR);
     
-    speedControllerBL.reset(new Talon(DRIVE_SPEED_CONTROLLER_BL_CHANNEL));
-    lw->AddActuator("Drive", "Speed Controller 3", (Talon&) speedControllerBL);
+    speedControllerBL.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_BL_CHANNEL));
+    lw->AddActuator("Drive", "Speed Controller 3", (CANTalon&) speedControllerBL);
     
-    speedControllerBR.reset(new Talon(DRIVE_SPEED_CONTROLLER_BR_CHANNEL));
-    lw->AddActuator("Drive", "Speed Controller 4", (Talon&) speedControllerBR);
+    speedControllerBR.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_BR_CHANNEL));
+    lw->AddActuator("Drive", "Speed Controller 4", (CANTalon&) speedControllerBR);
     
-    speedControllerLift.reset(new Talon(DRIVE_SPEED_CONTROLLER_LIFT_CHANNEL));
-        lw->AddActuator("Lift", "Speed Controller Lift", (Talon&) speedControllerLift);
+    speedControllerLift.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_LIFT_CHANNEL));
+        lw->AddActuator("Lift", "Speed Controller Lift", (CANTalon&) speedControllerLift);
 
     driveRobotDrive4.reset(new RobotDrive(speedControllerFL, speedControllerBL,
               speedControllerFR, speedControllerBR));
