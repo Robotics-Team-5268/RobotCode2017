@@ -7,7 +7,7 @@ Lift::Lift() : Subsystem("Lift") {
 }
 
 void Lift::takeInput(){
-	bool buttonA = CommandBase::oi->getShooterButtonPressed(1);
+	bool buttonA = CommandBase::oi->getDriverButtonPressed(4);
 
 	setMotors(0.6 * (float)buttonA); // we're multiplying by a decimal because buttonA is only 0 or 1
 }
