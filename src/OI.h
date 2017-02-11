@@ -13,6 +13,7 @@ public:
 
 	std::shared_ptr<Joystick> getDriverJoystick();
 	bool getDriverButtonPressed(int btnNum);
+	void setLiftDirection(bool ForR);
 
 };
 

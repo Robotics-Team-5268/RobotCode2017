@@ -19,7 +19,7 @@ OI::OI() {
     driverBtns[2]->WhenPressed(new LED(2));
     driverBtns[3]->WhenPressed(new LED(3));
 
-    driverBtns[4]->WhenPressed(new LiftWithButton());
+
 
     // SmartDashboard Buttons
     SmartDashboard::PutData("Rotate", new Rotate(90));
@@ -33,5 +33,10 @@ std::shared_ptr<Joystick> OI::getDriverJoystick() {
 bool OI::getDriverButtonPressed(int btnNum)
 {
 	return driverBtns[btnNum-1]->Get();
+}
+
+void OI::setLiftDirection(bool ForR)
+{
+	OI::driverBtns[4]->WhenPressed(new LiftWithButton(ForR));
 }
 

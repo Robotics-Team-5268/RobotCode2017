@@ -58,6 +58,6 @@ void Rotate::Interrupted() {
 }
 void RotatePIDOutput::PIDWrite(double a)
 {
-	CommandBase::drive->setMotors(a, -a);
+	CommandBase::drive->setMotors(-a, a);
 }
 RotatePIDOutput::~RotatePIDOutput(){}

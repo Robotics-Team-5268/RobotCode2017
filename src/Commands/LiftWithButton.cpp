@@ -1,9 +1,10 @@
 #include "LiftWithButton.h"
 
-LiftWithButton::LiftWithButton() {
+LiftWithButton::LiftWithButton(bool forwardOrReverse) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(lift.get());
+	ForR = forwardOrReverse;
 }
 
 // Called just before this Command runs the first time
@@ -13,12 +14,12 @@ void LiftWithButton::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void LiftWithButton::Execute() {
-	lift->takeInput();
+	lift->takeInput(ForR);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool LiftWithButton::IsFinished() {
-	return true;
+	return false;
 }
 
 // Called once after isFinished returns true

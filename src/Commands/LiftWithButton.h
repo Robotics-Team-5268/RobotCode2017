@@ -5,12 +5,14 @@
 
 class LiftWithButton : public CommandBase {
 public:
-	LiftWithButton();
+	LiftWithButton(bool forwardOrReverse);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
+private:
+	bool ForR;
 };
 
 #endif  // LiftWithButton_H

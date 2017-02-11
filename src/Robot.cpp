@@ -1,4 +1,5 @@
 #include "Robot.h"
+#include "Commands/LiftWithButton.h"
 
 std::unique_ptr<Autonomous> Robot::autonomousCommand;
 
@@ -56,6 +57,7 @@ void Robot::TeleopInit() {
 		autonomousCommand->Cancel();
 	}
 	CommandBase::drive->getGyro()->Reset();
+	CommandBase::oi->setLiftDirection(1);
 }
 
 void Robot::TeleopPeriodic() {
@@ -64,9 +66,10 @@ void Robot::TeleopPeriodic() {
 }
 
 void Robot::TestPeriodic() {
-	lw->Run();
+	Scheduler::GetInstance()->Run();
+	CommandBase::drive->AddSmartDashboardItems();
 }
 void Robot::TestInit(){
-
+	CommandBase::oi->setLiftDirection(0);
 }
 START_ROBOT_CLASS(Robot);

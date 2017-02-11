@@ -5,10 +5,10 @@
 #include "../RobotMap.h"
 
 Drive::Drive() : Subsystem("Drive"){
-    speedController1 = RobotMap::speedControllerFL;
-    speedController2 = RobotMap::speedControllerFR;
-    speedController3 = RobotMap::speedControllerBL;
-    speedController4 = RobotMap::speedControllerBR;
+    speedControllerFL = RobotMap::speedControllerFL;
+    speedControllerFR = RobotMap::speedControllerFR;
+    speedControllerBL = RobotMap::speedControllerBL;
+    speedControllerBR = RobotMap::speedControllerBR;
     robotDrive4 = RobotMap::driveRobotDrive4;
     //speedController1->SetInverted(true);
     //speedController2->SetInverted(true);
@@ -18,11 +18,15 @@ Drive::Drive() : Subsystem("Drive"){
 }
 void Drive::AddSmartDashboardItems()
 {
-	SmartDashboard::PutNumber("Speed Controller 1", speedController1->Get());
-	SmartDashboard::PutNumber("Speed Controller 2", speedController2->Get());
-	SmartDashboard::PutNumber("Speed Controller 3", speedController3->Get());
-	SmartDashboard::PutNumber("Speed Controller 4", speedController4->Get());
+	SmartDashboard::PutNumber("Speed Controller 1", speedControllerFL->Get());
+	SmartDashboard::PutNumber("Speed Controller 2", speedControllerFR->Get());
+	SmartDashboard::PutNumber("Speed Controller 3", speedControllerBL->Get());
+	SmartDashboard::PutNumber("Speed Controller 4", speedControllerBR->Get());
 	SmartDashboard::PutNumber("Gyro Angle", gyro->GetAngle());
+	SmartDashboard::PutNumber("Joystick X", CommandBase::oi->getDriverJoystick()->GetX());
+	SmartDashboard::PutNumber("Joystick Y", CommandBase::oi->getDriverJoystick()->GetY());
+	SmartDashboard::PutNumber("Left Trigger", CommandBase::oi->getDriverJoystick()->GetRawAxis(LEFT_TRIGGER));
+	SmartDashboard::PutNumber("Right Trigger", CommandBase::oi->getDriverJoystick()->GetRawAxis(RIGHT_TRIGGER));
 }
 void Drive::InitDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -40,15 +44,15 @@ void Drive::takeInput(){
 	robotDrive4->MecanumDrive_Cartesian(X, Y, rotateAmt);
 }
 void Drive::setMotors(float leftSpeed, float rightSpeed){
-	speedController1->Set(-rightSpeed);
-	speedController2->Set(-rightSpeed);
-	speedController3->Set(leftSpeed);
-	speedController4->Set(leftSpeed);
+	speedControllerFL->Set(leftSpeed);
+	speedControllerFR->Set(rightSpeed);
+	speedControllerBL->Set(leftSpeed);
+	speedControllerBR->Set(rightSpeed);
 }
 float Drive::returnAngle(){
 	return gyro->GetAngle();
 }
-AnalogGyro* Drive::getGyro()
+ADXRS450_Gyro* Drive::getGyro()
 {
 	return gyro.get();
 }

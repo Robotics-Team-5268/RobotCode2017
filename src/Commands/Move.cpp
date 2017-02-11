@@ -65,7 +65,7 @@ MovePIDOutput::MovePIDOutput(double sp){
 
 void MovePIDOutput::PIDWrite(double a)
 {
-	CommandBase::drive->setMotors(a + speed, -a + speed);
+	CommandBase::drive->setMotors(a - speed, -a - speed);
 }
 MovePIDOutput::~MovePIDOutput(){}
 
