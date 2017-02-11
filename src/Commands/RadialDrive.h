@@ -5,30 +5,30 @@
 #include "../Subsystems/Sighting.h"
 #include "../RobotMap.h"
 
-class RadialDrivePIDOutput;
+class RadialDriveDistancePIDOut;
 
 class RadialDrive : public CommandBase, public PIDOutput {
 public:
-	RadialDrive(double rotateAmt, double spd);
-	RadialDrive(double spd);
+	RadialDrive();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
-	double rotate;
-	double speed;
-	PIDController* pid;
-	PIDController* pid2;
-	RadialDrivePIDOutput* radialDrivePIDOutput;
+	PIDController* pidAngle;
+	PIDController* pidDistance;
+	RadialDriveDistancePIDOut* radialDrivePIDOutput;
 	void PIDWrite(double output);
 private:
 	std::shared_ptr<ADXRS450_Gyro> gyro;
+	std::unique_ptr<RadialDriveDistancePIDOut> theDistancePID;
 };
 
-class RadialDrivePIDOutput : public PIDOutput, public PIDSource {
+class RadialDriveDistancePIDOut : public PIDOutput, public PIDSource {
 	public:
+	RadialDriveDistancePIDOut(double centerX1, double centerX2);
 	void PIDWrite(double output);
 	double PIDGet();
+	double centerX;
 };
 #endif  // RadialDrive_H

@@ -10,7 +10,7 @@ void Sighting::InitDefaultCommand() {
 	// Set the default command for a subsystem here.
 	// SetDefaultCommand(new MySpecialCommand());
 }
-double Sighting::FindBoardAngle() {
+double Sighting::findBoardAngle() {
 	const double KHyp = 8.5; // distance between middle of contours
 	const int yres = 480; // y resolution of Microsoft Life Camera
 	//const int xres = 720; // x resolution of Microsoft Life Camera
@@ -51,11 +51,11 @@ double Sighting::FindBoardAngle() {
 
 }
 double Sighting::FindDesiredAngle() {
-	return gyro->GetAngle() - Sighting::FindBoardAngle();
+	return gyro->GetAngle() - Sighting::findBoardAngle();
 }
 bool Sighting::LeftOrRight() {
 	// true if right of target, false if left of target
-	if (Sighting::FindBoardAngle() < 0.0) {
+	if (Sighting::findBoardAngle() < 0.0) {
 		return true;
 	}
 	else { return false; }

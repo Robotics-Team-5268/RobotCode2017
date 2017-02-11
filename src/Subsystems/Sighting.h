@@ -13,7 +13,7 @@ private:
 public:
 	Sighting();
 	void InitDefaultCommand();
-	double FindBoardAngle();
+	double findBoardAngle();
 	double FindDesiredAngle();
 	bool LeftOrRight();
 	double DistanceToTarget();
