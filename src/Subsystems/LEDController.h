@@ -12,8 +12,6 @@ private:
 
 	std::shared_ptr<Relay> ledRelay1;
 	std::shared_ptr<Relay> ledRelay2;
-	std::shared_ptr<Relay> ledRelay3;
-	std::shared_ptr<Relay> ledRelay4;
 public:
 	LEDController();
 	void InitDefaultCommand();

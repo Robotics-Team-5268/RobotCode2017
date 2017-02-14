@@ -17,7 +17,6 @@ public:
 	void Interrupted();
 	PIDController* pidAngle;
 	PIDController* pidDistance;
-	RadialDriveDistancePIDOut* radialDrivePIDOutput;
 	void PIDWrite(double output);
 private:
 	std::shared_ptr<ADXRS450_Gyro> gyro;

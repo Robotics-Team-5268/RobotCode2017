@@ -2,6 +2,7 @@
 #include <Commands/DriveWithButton.h>
 #include "OI.h"
 #include "Commands/Rotate.h"
+#include "Commands/RadialDrive.h"
 #include "Commands/Move.h"
 #include "Commands/LED.h"
 #include "Commands/LiftWithButton.h"
@@ -24,7 +25,9 @@ OI::OI() {
     // SmartDashboard Buttons
     SmartDashboard::PutData("Rotate", new Rotate(90));
     SmartDashboard::PutData("Move", new Move(3, .3));
+    //SmartDashboard::PutData("Radial Drive", new RadialDrive());
 }
+
 
 std::shared_ptr<Joystick> OI::getDriverJoystick() {
    return driverJoystick;

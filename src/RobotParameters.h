@@ -14,6 +14,11 @@
 #define GYRO_SPI_PORT 							SPI::kOnboardCS0_
 //#define GYRO_ANALOG_PORT 0
 
+#define SCFL_INVERTED true
+#define SCBL_INVERTED true
+#define SCFR_INVERTED false
+#define SCBR_INVERTED false
+
 #define CAMERA_XRES 720
 #define CAMERA_YRES 480
 
@@ -23,6 +28,7 @@
 #define LEFT_TRIGGER 2
 
 #define Y_ERROR_MARGIN 20 // PIXELS
+#define X_ERROR_MARGIN 20
 #define AREA_ERROR_MARGIN .05 // PERCENT ERROR
 
 #endif /* SRC_ROBOTPARAMETERS_H_ */

@@ -5,8 +5,6 @@ LEDController::LEDController() : Subsystem("LEDController")
 {
 	ledRelay1 = RobotMap::ledRelay1;
 	ledRelay2 = RobotMap::ledRelay2;
-	ledRelay3 = RobotMap::ledRelay3;
-	ledRelay4 = RobotMap::ledRelay4;
 }
 
 void LEDController::InitDefaultCommand()
@@ -27,12 +25,6 @@ void LEDController::TurnOff(int num)
 	case 2:
 			ledRelay2->Set(Relay::kOff);
 			break;
-	case 3:
-			ledRelay3->Set(Relay::kOff);
-			break;
-	case 4:
-			ledRelay4->Set(Relay::kOff);
-			break;
 	}
 }
 
@@ -46,12 +38,6 @@ void LEDController::TurnOn(int num)
 		case 2:
 				ledRelay2->Set(Relay::kOn);
 				break;
-		case 3:
-				ledRelay3->Set(Relay::kOn);
-				break;
-		case 4:
-				ledRelay4->Set(Relay::kOn);
-				break;
 		}
 }
 bool LEDController::IsOn(int num)
@@ -62,10 +48,6 @@ bool LEDController::IsOn(int num)
 			return (ledRelay1->Get() == Relay::kOn ? true : false);
 		case 2:
 			return (ledRelay2->Get() == Relay::kOn ? true : false);
-		case 3:
-			return (ledRelay3->Get() == Relay::kOn ? true : false);
-		case 4:
-			return (ledRelay4->Get() == Relay::kOn ? true : false);
 	}
 	return false;
 }

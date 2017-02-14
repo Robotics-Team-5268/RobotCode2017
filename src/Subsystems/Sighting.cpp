@@ -20,9 +20,35 @@ double Sighting::findBoardAngle() {
 	int pixelHeight1 = 0; //from contours table
 	int pixelHeight2 = 0; //from contours table
 
+	int topCutContour = 0;
+	int bottomCutContour = 0;
+
+	// checks if there is a set of broken contours from the peg
+	// by seeing if their X values are close to each other
+
+	for (uint i = 0; i < area.size(); i++) // area.size() gives the number of contours
+		{
+			for (uint j = i + 1; j < area.size(); j++)
+			{
+				if (fabs(centerX[j] - centerX[i]) < X_ERROR_MARGIN) //Check if within margin of error
+				{
+					if (centerY[j] > centerY[i]) { // Find the top contour
+						topCutContour = j;
+						bottomCutContour = i;
+					} else {
+						bottomCutContour = j;
+						topCutContour = i;
+					}
+					i = area.size(); // jump to end of loop
+					j = area.size();
+				}
+			}
+		}
+
 	// this runs through all of the contours
 	// and ensures that they are at similar heights
 	// and that they are similar in area
+
 	for (uint i = 0; i < area.size(); i++) // area.size() gives the number of contours
 	{
 		for (uint j = i + 1; j < area.size(); j++)
@@ -42,10 +68,15 @@ double Sighting::findBoardAngle() {
 			}
 		}
 	}
+	frc::SmartDashboard::PutNumber("Pixel Height 1", pixelHeight1);
+	frc::SmartDashboard::PutNumber("Pixel Height 2", pixelHeight2);
 
 	d1 = 5 * yres / (2 * pixelHeight1 * tan(vertAng)); // distance to left contour
+	frc::SmartDashboard::PutNumber("Distance 1", d1);
 	d2 = 5 * yres / (2 * pixelHeight2 * tan(vertAng)); // distance to right contour
+	frc::SmartDashboard::PutNumber("Distance 2", d2);
 	boardAng = asin((d2 - d1) / KHyp); // positive if left of target, negative if right
+	frc::SmartDashboard::PutNumber("Board Angle", boardAng);
 
 	return boardAng;
 

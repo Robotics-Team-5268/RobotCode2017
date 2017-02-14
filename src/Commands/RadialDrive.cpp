@@ -1,12 +1,16 @@
 #include "RadialDrive.h"
 
-RadialDrive::RadialDrive() : theDistancePID( new RadialDriveDistancePIDOut(sighting->centerX[0], sighting->centerX[1]) ){
+RadialDrive::RadialDrive(){
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Command::Requires(drive.get());
 	Command::Requires(sighting.get());
 	pidAngle = nullptr;
 	pidDistance = nullptr;
+	if(sighting->TwoTargetsAvailable())
+		theDistancePID.reset(new RadialDriveDistancePIDOut(sighting->centerX[0], sighting->centerX[1]));
+	else
+		Cancel();
 }
 
 // Called just before this Command runs the first time
@@ -68,7 +72,12 @@ bool RadialDrive::IsFinished() {
 
 // Called once after isFinished returns true
 void RadialDrive::End() {
-
+	pidAngle->Disable();
+	delete pidAngle;
+	pidAngle = nullptr;
+	pidDistance->Disable();
+	delete pidDistance;
+	pidDistance = nullptr;
 }
 
 // Called when another command which requires one or more of the same

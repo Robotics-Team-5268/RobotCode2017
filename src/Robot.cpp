@@ -4,16 +4,10 @@
 std::unique_ptr<Autonomous> Robot::autonomousCommand;
 
 void Robot::RobotInit() {
-	//start grip
-	system("/home/lvuser/grip &");
-
 	RobotMap::init();
 	CommandBase::init();
 
 	CommandBase::drive->safetyOff();
-
-	//instantiate the command used for the autonomous period
-	//autonomousCommand.reset(new Autonomous());
 
 	autonomousChooser.reset(new SendableChooser<int*>());
 	autonomousChooser->AddDefault("Right", new int(1));
@@ -37,7 +31,7 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	//autonomousCommand.Start();
 	RobotMap::driveGyro->Reset();
-	int* selection = (int*) autonomousChooser->GetSelected();
+	int* selection = autonomousChooser->GetSelected();
 	autonomousCommand.reset(new Autonomous(*selection));
 	autonomousCommand->Start();
 }
