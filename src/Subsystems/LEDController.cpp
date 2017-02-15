@@ -20,10 +20,10 @@ void LEDController::TurnOff(int num)
 	switch(num)
 	{
 	case 1:
-			ledRelay1->Set(Relay::kOff);
+			ledRelay1->Set(frc::Relay::kOff);
 			break;
 	case 2:
-			ledRelay2->Set(Relay::kOff);
+			ledRelay2->Set(frc::Relay::kOff);
 			break;
 	}
 }
@@ -33,10 +33,10 @@ void LEDController::TurnOn(int num)
 	switch(num)
 		{
 		case 1:
-				ledRelay1->Set(Relay::kOn);
+				ledRelay1->Set(frc::Relay::kOn);
 				break;
 		case 2:
-				ledRelay2->Set(Relay::kOn);
+				ledRelay2->Set(frc::Relay::kOn);
 				break;
 		}
 }
@@ -45,9 +45,9 @@ bool LEDController::IsOn(int num)
 	switch(num)
 	{
 		case 1:
-			return (ledRelay1->Get() == Relay::kOn ? true : false);
+			return (ledRelay1->Get() == frc::Relay::kOn ? true : false);
 		case 2:
-			return (ledRelay2->Get() == Relay::kOn ? true : false);
+			return (ledRelay2->Get() == frc::Relay::kOn ? true : false);
 	}
 	return false;
 }

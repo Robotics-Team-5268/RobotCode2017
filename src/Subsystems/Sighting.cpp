@@ -11,10 +11,11 @@ void Sighting::InitDefaultCommand() {
 	// SetDefaultCommand(new MySpecialCommand());
 }
 double Sighting::findBoardAngle() {
+	readTable(); // REMOVE THIS LATER ***************************************************************
 	const double KHyp = 8.5; // distance between middle of contours
 	const int yres = 480; // y resolution of Microsoft Life Camera
 	//const int xres = 720; // x resolution of Microsoft Life Camera
-	const double vertAng = 33.69; //degrees
+	const double vertAng = 0.58800142; // 33.69 degrees
 	//const double horiAng = 60.69; //degrees
 
 	int pixelHeight1 = 0; //from contours table
@@ -23,19 +24,25 @@ double Sighting::findBoardAngle() {
 	int topCutContour = 0;
 	int bottomCutContour = 0;
 
+
 	// checks if there is a set of broken contours from the peg
 	// by seeing if their X values are close to each other
 
 	for (uint i = 0; i < area.size(); i++) // area.size() gives the number of contours
 		{
+		frc::SmartDashboard::PutNumber("i", i);
 			for (uint j = i + 1; j < area.size(); j++)
 			{
+				frc::SmartDashboard::PutNumber("j", j);
 				if (fabs(centerX[j] - centerX[i]) < X_ERROR_MARGIN) //Check if within margin of error
 				{
+					frc::SmartDashboard::PutNumber("1", 1);
 					if (centerY[j] > centerY[i]) { // Find the top contour
+						frc::SmartDashboard::PutNumber("2", 2);
 						topCutContour = j;
 						bottomCutContour = i;
 					} else {
+						frc::SmartDashboard::PutNumber("3", 3);
 						bottomCutContour = j;
 						topCutContour = i;
 					}
@@ -51,18 +58,24 @@ double Sighting::findBoardAngle() {
 
 	for (uint i = 0; i < area.size(); i++) // area.size() gives the number of contours
 	{
+		frc::SmartDashboard::PutNumber("i2", i);
 		for (uint j = i + 1; j < area.size(); j++)
 		{
+			frc::SmartDashboard::PutNumber("j2", j);
 			if (fabs(centerY[j] - centerY[i]) < Y_ERROR_MARGIN && //Check if within margin of error
 					(area[j] - area[i]) / area[j] < AREA_ERROR_MARGIN)
 			{
+				frc::SmartDashboard::PutNumber("4", 4);
 				if (centerX[j] > centerX[i]) { // Find the left contour
+					frc::SmartDashboard::PutNumber("5", 5);
 					pixelHeight1 = height[i];
 					pixelHeight2 = height[j];
 				} else {
+					frc::SmartDashboard::PutNumber("6", 6);
 					pixelHeight2 = height[i];
 					pixelHeight1 = height[j];
 				}
+				frc::SmartDashboard::PutNumber("Countours Fit", 1);
 				i = area.size(); // jump to end of loop
 				j = area.size();
 			}
@@ -75,7 +88,7 @@ double Sighting::findBoardAngle() {
 	frc::SmartDashboard::PutNumber("Distance 1", d1);
 	d2 = 5 * yres / (2 * pixelHeight2 * tan(vertAng)); // distance to right contour
 	frc::SmartDashboard::PutNumber("Distance 2", d2);
-	boardAng = asin((d2 - d1) / KHyp); // positive if left of target, negative if right
+	boardAng = (asin((d2 - d1) / KHyp)/ 3.14159265) * 180; // positive if left of target, negative if right
 	frc::SmartDashboard::PutNumber("Board Angle", boardAng);
 
 	return boardAng;

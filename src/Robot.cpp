@@ -57,6 +57,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 	CommandBase::drive->AddSmartDashboardItems();
+	CommandBase::sighting->findBoardAngle();
 }
 
 void Robot::TestPeriodic() {
