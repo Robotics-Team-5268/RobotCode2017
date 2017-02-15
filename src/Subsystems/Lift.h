@@ -11,13 +11,19 @@ private:
 
 	std::shared_ptr<SpeedController> speedController1;
 	std::shared_ptr<SpeedController> speedController2;
-
+	bool climbing_rope = false;
 	void InitDefaultCommand();
 public:
 	Lift();
 
 	void setMotors(float speed);
 	void takeInput(bool ForR);
+	bool getclimbing_rope() {
+		return climbing_rope;
+	}
+	void setclimbing_rope(bool climbing) {
+			climbing_rope = climbing;
+		}
 };
 
 #endif  // Lift_H
