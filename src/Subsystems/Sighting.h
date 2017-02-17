@@ -19,6 +19,7 @@ public:
 	double DistanceToTarget();
 	void readTable();
 	bool TwoTargetsAvailable();
+	double getCenterX();
 	double d1;
 	double d2;
 	double boardAng;

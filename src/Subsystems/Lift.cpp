@@ -7,6 +7,7 @@
 Lift::Lift() : Subsystem("Lift") {
 	speedController1 = RobotMap::speedControllerLift1;
 	speedController2 = RobotMap::speedControllerLift2;
+	((CANTalon*)speedController1.get())->SetPosition(0);
 }
 
 void Lift::takeInput(bool ForR){
@@ -21,9 +22,9 @@ void Lift::takeInput(bool ForR){
 		}
 	}
 	if(ForR)
-	setMotors(0.4 * (float)buttonA); // we're multiplying by a decimal because buttonA is only 0 or 1
+	setMotors(0.5 * (float)buttonA); // we're multiplying by a decimal because buttonA is only 0 or 1
 	else
-	setMotors(-0.4 * (float)buttonA);
+	setMotors(-0.5 * (float)buttonA);
 }
 
 //Both motors move in same direction, so only 1 speed is necessary.

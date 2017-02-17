@@ -32,7 +32,7 @@ void Robot::AutonomousInit() {
 	//autonomousCommand.Start();
 	RobotMap::driveGyro->Reset();
 	int* selection = autonomousChooser->GetSelected();
-	autonomousCommand.reset(new Autonomous(*selection));
+	autonomousCommand.reset(new Autonomous(2));// replace with selection
 	autonomousCommand->Start();
 }
 
@@ -57,7 +57,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 	CommandBase::drive->AddSmartDashboardItems();
-	CommandBase::sighting->findBoardAngle();
+	//CommandBase::sighting->findBoardAngle();
 }
 
 void Robot::TestPeriodic() {

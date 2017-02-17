@@ -2,8 +2,8 @@
 #include "../RobotMap.h"
 #include <math.h>
 
-Sighting::Sighting() : Subsystem("Sighting") {
-	readTable();
+Sighting::Sighting() : Subsystem("Sighting"), gyro( nullptr ) {
+	//readTable();
 }
 
 void Sighting::InitDefaultCommand() {
@@ -11,7 +11,7 @@ void Sighting::InitDefaultCommand() {
 	// SetDefaultCommand(new MySpecialCommand());
 }
 double Sighting::findBoardAngle() {
-	readTable(); // REMOVE THIS LATER ***************************************************************
+	//readTable(); // REMOVE THIS LATER ***************************************************************
 	const double KHyp = 8.5; // distance between middle of contours
 	const int yres = 480; // y resolution of Microsoft Life Camera
 	//const int xres = 720; // x resolution of Microsoft Life Camera
@@ -125,4 +125,12 @@ void Sighting::readTable()
 
 bool Sighting::TwoTargetsAvailable() {
 	return solidity.size() >= 2; // returns true if there are at least 2 contours
+}
+double Sighting::getCenterX() {
+	if (TwoTargetsAvailable()){
+		return (centerX[0] + centerX[1]) / 2;
+	}
+	else {
+		return 0.0;
+	}
 }

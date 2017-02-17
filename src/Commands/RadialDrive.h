@@ -25,9 +25,9 @@ private:
 
 class RadialDriveDistancePIDOut : public PIDOutput, public PIDSource {
 	public:
-	RadialDriveDistancePIDOut(double centerX1, double centerX2);
+	RadialDriveDistancePIDOut(Sighting* obj);
 	void PIDWrite(double output);
 	double PIDGet();
-	double centerX;
+	Sighting* sighting;
 };
 #endif  // RadialDrive_H

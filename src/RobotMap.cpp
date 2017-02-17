@@ -18,6 +18,7 @@ std::shared_ptr<Sighting> RobotMap::sighting;
 
 std::shared_ptr<Relay> RobotMap::ledRelay1;
 std::shared_ptr<Relay> RobotMap::ledRelay2;
+std::shared_ptr<Relay> RobotMap::ledRelay3;
 
 std::shared_ptr<Sighting> sighting;
 
@@ -68,4 +69,6 @@ void RobotMap::init() {
 	ledRelay1->Set(Relay::kOff);
 	ledRelay2.reset(new Relay(1, Relay::kForwardOnly));
 	ledRelay2->Set(Relay::kOff);
+	ledRelay3.reset(new Relay(2, Relay::kForwardOnly));
+	ledRelay3->Set(Relay::kOff);
 }

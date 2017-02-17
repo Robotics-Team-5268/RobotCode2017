@@ -22,6 +22,7 @@ public:
 
 	static std::shared_ptr<Relay> ledRelay1;
 	static std::shared_ptr<Relay> ledRelay2;
+	static std::shared_ptr<Relay> ledRelay3;
 
 	static std::shared_ptr<Sighting> sighting;
 

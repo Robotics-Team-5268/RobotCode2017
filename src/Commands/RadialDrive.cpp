@@ -8,7 +8,7 @@ RadialDrive::RadialDrive(){
 	pidAngle = nullptr;
 	pidDistance = nullptr;
 	if(sighting->TwoTargetsAvailable())
-		theDistancePID.reset(new RadialDriveDistancePIDOut(sighting->centerX[0], sighting->centerX[1]));
+		theDistancePID.reset(new RadialDriveDistancePIDOut(sighting.get()));
 	else
 		Cancel();
 }
@@ -26,6 +26,9 @@ void RadialDrive::Execute() {
 			SmartDashboard::PutNumber("I", pidAngle->GetI());
 			SmartDashboard::PutNumber("D", pidAngle->GetD());
 			SmartDashboard::PutNumber("F", pidAngle->GetF());
+
+			sighting->readTable();
+			pidAngle->SetSetpoint(drive->getGyro()->GetAngle() + sighting->findBoardAngle());
 		}else{
 			pidAngle = new PIDController(
 								SmartDashboard::GetNumber("P", .03),
@@ -39,7 +42,6 @@ void RadialDrive::Execute() {
 			pidAngle->SetOutputRange(-.75, .75);
 			pidAngle->SetAbsoluteTolerance(3);
 			pidAngle->Enable();
-			pidAngle->SetSetpoint(sighting->findBoardAngle());
 		}
 	if(pidDistance){
 				SmartDashboard::PutNumber("P", pidDistance->GetP());
@@ -86,11 +88,12 @@ void RadialDrive::Interrupted() {}
 
 void RadialDrive::PIDWrite(double output) {}
 
-RadialDriveDistancePIDOut::RadialDriveDistancePIDOut(double centerX1, double centerX2){
-	centerX = (centerX1 + centerX2) / 2;
+RadialDriveDistancePIDOut::RadialDriveDistancePIDOut(Sighting* obj):sighting(obj){
+
 }
 void RadialDriveDistancePIDOut::PIDWrite(double output){}
 
 double RadialDriveDistancePIDOut::PIDGet(){
-	return X_ORIGIN_OFFSET - ((centerX - CAMERA_XRES / 2) / (CAMERA_XRES / 2));
+	sighting->readTable();
+	return X_ORIGIN_OFFSET + sighting->getCenterX();
 }
