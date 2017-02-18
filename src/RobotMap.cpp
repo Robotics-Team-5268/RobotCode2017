@@ -16,9 +16,7 @@ std::shared_ptr<Sighting> RobotMap::sighting;
  std::shared_ptr<ADXRS450_Gyro> RobotMap::driveGyro;
 //std::shared_ptr<AnalogGyro> RobotMap::driveGyro;
 
-std::shared_ptr<Relay> RobotMap::ledRelay1;
-std::shared_ptr<Relay> RobotMap::ledRelay2;
-std::shared_ptr<Relay> RobotMap::ledRelay3;
+std::shared_ptr<Relay> RobotMap::ledRelay[3];
 
 std::shared_ptr<Sighting> sighting;
 
@@ -65,10 +63,8 @@ void RobotMap::init() {
     //shooterSpeedController->SetControlMode(CANSpeedController::kSpeed);
     //shooterSpeedController->SetPID(.3, .003, 3.0, 0.0);
 
-    ledRelay1.reset(new Relay(0, Relay::kForwardOnly));
-	ledRelay1->Set(Relay::kOff);
-	ledRelay2.reset(new Relay(1, Relay::kForwardOnly));
-	ledRelay2->Set(Relay::kOff);
-	ledRelay3.reset(new Relay(2, Relay::kForwardOnly));
-	ledRelay3->Set(Relay::kOff);
+    for(int i = 0; i < 3; i++){
+    	ledRelay[i].reset(new Relay(i, Relay::kBothDirections));
+    	ledRelay[i]->Set(Relay::kOff);
+    }
 }

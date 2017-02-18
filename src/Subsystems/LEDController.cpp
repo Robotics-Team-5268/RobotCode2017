@@ -3,9 +3,9 @@
 
 LEDController::LEDController() : Subsystem("LEDController")
 {
-	ledRelay1 = RobotMap::ledRelay1;
-	ledRelay2 = RobotMap::ledRelay2;
-	ledRelay3 = RobotMap::ledRelay3;
+	for(int i = 0; i < 3; i++) {
+		ledRelay[i] = RobotMap::ledRelay[i];
+	}
 }
 
 void LEDController::InitDefaultCommand()
@@ -18,45 +18,46 @@ void LEDController::InitDefaultCommand()
 // here. Call these from Commands.
 void LEDController::TurnOff(int num)
 {
-	switch(num)
-	{
-	case 1:
-			ledRelay1->Set(frc::Relay::kOff);
-			break;
-	case 2:
-			ledRelay2->Set(frc::Relay::kOff);
-			break;
-	case 3:
-			ledRelay3->Set(frc::Relay::kOff);
-			break;
-	}
+	led_state[num] = false;
+	SetRelays();
 }
 
 void LEDController::TurnOn(int num)
 {
-	switch(num)
-		{
-		case 1:
-				ledRelay1->Set(frc::Relay::kOn);
-				break;
-		case 2:
-				ledRelay2->Set(frc::Relay::kOn);
-				break;
-		case 3:
-				ledRelay3->Set(frc::Relay::kOn);
-				break;
-		}
+	led_state[num] = true;
+	SetRelays();
 }
 bool LEDController::IsOn(int num)
 {
-	switch(num)
-	{
-		case 1:
-			return (ledRelay1->Get() == frc::Relay::kOn ? true : false);
-		case 2:
-			return (ledRelay2->Get() == frc::Relay::kOn ? true : false);
-		case 3:
-			return (ledRelay3->Get() == frc::Relay::kOn ? true : false);
+	return led_state[num];
+}
+
+void LEDController::SetRelays()
+{
+	int m_plus_led;
+	int m_minus_led;
+	bool m_plus;
+	bool m_minus;
+
+	for(int i = 0; i < 3; i++) {
+		m_minus_led = i * 2;
+		m_plus_led = m_minus_led + 1;
+		m_minus = led_state[m_minus_led];
+		m_plus  = led_state[m_plus_led];
+
+		// invert all LED output states since the wiring is a common anode (positive) voltage
+		if( m_plus_led == LED_RED || m_plus_led == LED_BLUE || m_plus_led == LED_GREEN )
+			m_plus = !m_plus;
+		if( m_minus_led == LED_RED || m_minus_led == LED_BLUE || m_minus_led == LED_GREEN )
+			m_minus = !m_minus;
+
+		if(m_minus == true && m_plus == true)
+			ledRelay[i]->Set(frc::Relay::kOn);
+		else if(m_minus == false && m_plus == false)
+			ledRelay[i]->Set(frc::Relay::kOff);
+		else if(m_minus == true && m_plus == false)
+			ledRelay[i]->Set(frc::Relay::kReverse);
+		else if(m_minus == false && m_plus == true)
+			ledRelay[i]->Set(frc::Relay::kForward);
 	}
-	return false;
 }

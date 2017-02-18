@@ -20,9 +20,7 @@ public:
 	static std::shared_ptr<ADXRS450_Gyro>driveGyro;
 	//static std::shared_ptr<AnalogGyro>driveGyro;
 
-	static std::shared_ptr<Relay> ledRelay1;
-	static std::shared_ptr<Relay> ledRelay2;
-	static std::shared_ptr<Relay> ledRelay3;
+	static std::shared_ptr<Relay> ledRelay[3];
 
 	static std::shared_ptr<Sighting> sighting;
 

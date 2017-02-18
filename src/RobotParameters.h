@@ -13,6 +13,21 @@
 #define DRIVE_SPEED_CONTROLLER_LIFT_CHANNEL_2 	6
 #define GYRO_SPI_PORT 							SPI::kOnboardCS0_
 //#define GYRO_ANALOG_PORT 0
+//relay 0 m- is hooked to red led
+//relay 0 m+ is hooked to camera led
+//relay 1 m- is hooked to green led
+//relay 1 m+ is hooked to blue led
+//relay 2 m+ is hooked to led master power
+//relay 2 m- is not hooked up
+
+// LED numbers must be in order of relay and then M-/M+ pin
+// To determine relay number, divide by 2. To determine M-/M+ pin, mod by 2.
+#define LED_RED 0
+#define LED_CAMERA 1
+#define LED_BLUE 3
+#define LED_GREEN 2
+#define LED_SPARE 4
+#define LED_MASTER 5
 
 #define SCFL_INVERTED true
 #define SCBL_INVERTED true
