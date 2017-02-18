@@ -10,9 +10,9 @@ private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
 
-	std::shared_ptr<Relay> ledRelay1;
-	std::shared_ptr<Relay> ledRelay2;
-	std::shared_ptr<Relay> ledRelay3;
+	std::shared_ptr<Relay> ledRelay[3];
+	bool led_state[6] = {false, false, false, false, false, false};
+	void SetRelays();
 public:
 	LEDController();
 	void InitDefaultCommand();

@@ -16,15 +16,18 @@ OI::OI() {
     	driverBtns.push_back(new JoystickButton(driverJoystick.get(), i));
     }
 
-    driverBtns[1]->WhenPressed(new LED(1));
-    driverBtns[2]->WhenPressed(new LED(2));
-    driverBtns[3]->WhenPressed(new LED(3));
-
-
+    driverBtns[1]->WhenPressed(new LED(LED_CAMERA));
+    driverBtns[2]->WhenPressed(new LED(LED_MASTER));
+    driverBtns[3]->WhenPressed(new LED(LED_BLUE));
 
     // SmartDashboard Buttons
     SmartDashboard::PutData("Rotate", new Rotate(90));
     SmartDashboard::PutData("Move", new Move(3, .3));
+    SmartDashboard::PutData("Cam Light", new LED(LED_CAMERA));
+    SmartDashboard::PutData("Blue", new LED(LED_BLUE));
+    SmartDashboard::PutData("All LED", new LED(LED_MASTER));
+    SmartDashboard::PutData("Green", new LED(LED_GREEN));
+    SmartDashboard::PutData("Red", new LED(LED_RED));
     //SmartDashboard::PutData("Radial Drive", new RadialDrive());
 }
 
