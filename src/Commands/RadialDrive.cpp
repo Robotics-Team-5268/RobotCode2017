@@ -28,7 +28,7 @@ void RadialDrive::Execute() {
 			SmartDashboard::PutNumber("F", pidAngle->GetF());
 
 			sighting->readTable();
-			pidAngle->SetSetpoint(drive->getGyro()->GetAngle() + sighting->findBoardAngle());
+			pidAngle->SetSetpoint(drive->getGyro()->GetAngle() - sighting->findBoardAngle());
 		}else{
 			pidAngle = new PIDController(
 								SmartDashboard::GetNumber("P", .03),
@@ -60,16 +60,20 @@ void RadialDrive::Execute() {
 				pidDistance->SetInputRange(-1, 1);
 				pidDistance->SetOutputRange(-.75, .75);
 				pidDistance->SetAbsoluteTolerance(.05);
-				pidDistance->Enable();
 				pidDistance->SetSetpoint(0.0);
+				pidDistance->Enable();
 			}
+	frc::SmartDashboard::PutNumber("Radial Angle", pidAngle->Get());
+	frc::SmartDashboard::PutNumber("Radial Distance", pidDistance->Get());
+
 	CommandBase::drive->robotDrive4->MecanumDrive_Cartesian(pidDistance->Get(), 0.0, pidAngle->Get());
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool RadialDrive::IsFinished() {
-	return pidAngle->OnTarget();
+	//return pidAngle->OnTarget();
+	return false;
 }
 
 // Called once after isFinished returns true
@@ -95,5 +99,8 @@ void RadialDriveDistancePIDOut::PIDWrite(double output){}
 
 double RadialDriveDistancePIDOut::PIDGet(){
 	sighting->readTable();
+	frc::SmartDashboard::PutNumber("getCenterX", sighting->getCenterX());
 	return X_ORIGIN_OFFSET + sighting->getCenterX();
 }
+RadialDrive::~RadialDrive(){};
+RadialDriveDistancePIDOut::~RadialDriveDistancePIDOut(){};

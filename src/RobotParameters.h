@@ -19,7 +19,7 @@
 #define SCFR_INVERTED false
 #define SCBR_INVERTED false
 
-#define CAMERA_XRES 720
+#define CAMERA_XRES 640
 #define CAMERA_YRES 480
 
 #define X_ORIGIN_OFFSET .5 //Scale from -1,1

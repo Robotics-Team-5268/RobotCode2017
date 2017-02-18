@@ -29,7 +29,6 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-	//autonomousCommand.Start();
 	RobotMap::driveGyro->Reset();
 	int* selection = autonomousChooser->GetSelected();
 	autonomousCommand.reset(new Autonomous(2));// replace with selection

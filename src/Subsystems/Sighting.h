@@ -14,7 +14,6 @@ public:
 	Sighting();
 	void InitDefaultCommand();
 	double findBoardAngle();
-	double FindDesiredAngle();
 	bool LeftOrRight();
 	double DistanceToTarget();
 	void readTable();

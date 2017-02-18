@@ -10,6 +10,7 @@ class RadialDriveDistancePIDOut;
 class RadialDrive : public CommandBase, public PIDOutput {
 public:
 	RadialDrive();
+	~RadialDrive();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
@@ -19,15 +20,17 @@ public:
 	PIDController* pidDistance;
 	void PIDWrite(double output);
 private:
-	std::shared_ptr<ADXRS450_Gyro> gyro;
 	std::unique_ptr<RadialDriveDistancePIDOut> theDistancePID;
 };
 
 class RadialDriveDistancePIDOut : public PIDOutput, public PIDSource {
 	public:
-	RadialDriveDistancePIDOut(Sighting* obj);
-	void PIDWrite(double output);
-	double PIDGet();
-	Sighting* sighting;
+		RadialDriveDistancePIDOut(Sighting* obj);
+		~RadialDriveDistancePIDOut();
+		void PIDWrite(double output);
+		double PIDGet();
+
+	private:
+		Sighting* sighting;
 };
 #endif  // RadialDrive_H

@@ -13,10 +13,10 @@ void Sighting::InitDefaultCommand() {
 double Sighting::findBoardAngle() {
 	//readTable(); // REMOVE THIS LATER ***************************************************************
 	const double KHyp = 8.5; // distance between middle of contours
-	const int yres = 480; // y resolution of Microsoft Life Camera
-	//const int xres = 720; // x resolution of Microsoft Life Camera
-	const double vertAng = 0.58800142; // 33.69 degrees
-	//const double horiAng = 60.69; //degrees
+	//const int yres = 480; // y resolution of Microsoft Life Camera
+	const int xres = 640; // x resolution of Microsoft Life Camera
+	//const double vertAng = 0.58800142; // 33.69 degrees
+	const double horiAng = 0.36397895; //20.85 degrees
 
 	int pixelHeight1 = 0; //from contours table
 	int pixelHeight2 = 0; //from contours table
@@ -24,6 +24,7 @@ double Sighting::findBoardAngle() {
 	int topCutContour = 0;
 	int bottomCutContour = 0;
 
+	if (area.size() < 1) return 0;
 
 	// checks if there is a set of broken contours from the peg
 	// by seeing if their X values are close to each other
@@ -68,34 +69,46 @@ double Sighting::findBoardAngle() {
 				frc::SmartDashboard::PutNumber("4", 4);
 				if (centerX[j] > centerX[i]) { // Find the left contour
 					frc::SmartDashboard::PutNumber("5", 5);
-					pixelHeight1 = height[i];
-					pixelHeight2 = height[j];
+					pixelHeight1 = width[i];
+					pixelHeight2 = width[j];
 				} else {
 					frc::SmartDashboard::PutNumber("6", 6);
-					pixelHeight2 = height[i];
-					pixelHeight1 = height[j];
-				}
+					pixelHeight2 = width[i];
+					pixelHeight1 = width[j];
+	 			}
 				frc::SmartDashboard::PutNumber("Countours Fit", 1);
 				i = area.size(); // jump to end of loop
 				j = area.size();
 			}
 		}
 	}
+
 	frc::SmartDashboard::PutNumber("Pixel Height 1", pixelHeight1);
 	frc::SmartDashboard::PutNumber("Pixel Height 2", pixelHeight2);
 
-	d1 = 5 * yres / (2 * pixelHeight1 * tan(vertAng)); // distance to left contour
-	frc::SmartDashboard::PutNumber("Distance 1", d1);
-	d2 = 5 * yres / (2 * pixelHeight2 * tan(vertAng)); // distance to right contour
-	frc::SmartDashboard::PutNumber("Distance 2", d2);
-	boardAng = (asin((d2 - d1) / KHyp)/ 3.14159265) * 180; // positive if left of target, negative if right
-	frc::SmartDashboard::PutNumber("Board Angle", boardAng);
-
-	return boardAng;
-
-}
-double Sighting::FindDesiredAngle() {
-	return gyro->GetAngle() - Sighting::findBoardAngle();
+	if (pixelHeight1 != 0 && pixelHeight2 != 0) {
+		d1 = 2 * xres / (2 * pixelHeight1 * tan(horiAng)); // distance to left contour
+		frc::SmartDashboard::PutNumber("Distance 1", d1);
+		d2 = 2 * xres / (2 * pixelHeight2 * tan(horiAng)); // distance to right contour
+		frc::SmartDashboard::PutNumber("Distance 2", d2);
+		boardAng = (asin((d2 - d1) / KHyp)/ 3.14159265) * 180; // positive if left of target, negative if right
+		frc::SmartDashboard::PutNumber("Board Angle", boardAng);
+		return boardAng;
+	}
+	return 0.0;
+/*
+	// 8.5in is for the distance from center to center from goal, then divide by the length between centers in pixels to get proportion
+	const double constant = KHyp / abs(centerX[0] - centerX[1]);
+	double angleToGoal = 0;
+	// this calculates the distance from the center of goal to center of webcam
+	double distanceFromCenterPixels= ((centerX[0] + centerX[1]) / 2) - (CAMERA_XRES / 2);
+	// Converts pixels to inches using the constant from above.
+	double distanceFromCenterInch = distanceFromCenterPixels * constant;
+	// math brought to you buy Chris and Jones
+	angleToGoal = atan(distanceFromCenterInch / distanceFromTarget());
+	angleToGoal = Math.toDegrees(angleToGoal);
+	return angleToGoal;
+*/
 }
 bool Sighting::LeftOrRight() {
 	// true if right of target, false if left of target
