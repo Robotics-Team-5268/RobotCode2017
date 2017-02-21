@@ -50,9 +50,9 @@ void RadialDrive::Execute() {
 				SmartDashboard::PutNumber("F", pidDistance->GetF());
 			}else{
 				pidDistance = new PIDController(
-									SmartDashboard::GetNumber("P", .03),
-									SmartDashboard::GetNumber("I", .005),
-									SmartDashboard::GetNumber("D", .01),
+									SmartDashboard::GetNumber("P", .0),
+									SmartDashboard::GetNumber("I", .0),
+									SmartDashboard::GetNumber("D", .0),
 									SmartDashboard::GetNumber("F", 0),
 									theDistancePID.get(),
 									theDistancePID.get()

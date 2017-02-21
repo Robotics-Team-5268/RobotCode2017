@@ -17,9 +17,9 @@ void DirectionWithLED::Initialize() {
 void DirectionWithLED::Execute() {
 	if(sighting->findBoardAngle() > 5.0)
 		{
-			leds->TurnOff(LED_RED);
+			leds->TurnOff(LED_BLUE);
 			leds->TurnOff(LED_GREEN);
-			leds->TurnOn(LED_BLUE);
+			leds->TurnOn(LED_RED);
 			SmartDashboard::PutNumber("Greater than 5", 1);
 			SmartDashboard::PutNumber("Less than -5", 0);
 			SmartDashboard::PutNumber("Right on, dude!", 0);
@@ -28,9 +28,9 @@ void DirectionWithLED::Execute() {
 		}
 		else if(sighting->findBoardAngle() < -5.0)
 		{
-			leds->TurnOff(LED_BLUE);
+			leds->TurnOff(LED_RED);
 			leds->TurnOff(LED_GREEN);
-			leds->TurnOn(LED_RED);
+			leds->TurnOn(LED_BLUE);
 			SmartDashboard::PutNumber("Greater than 5", 0);
 			SmartDashboard::PutNumber("Less than -5", 1);
 			SmartDashboard::PutNumber("Right on, dude!", 0);
@@ -38,9 +38,9 @@ void DirectionWithLED::Execute() {
 		}
 		else if(sighting->TwoTargetsAvailable())
 		{
-			leds->TurnOff(LED_BLUE);
-			leds->TurnOn(LED_GREEN);
 			leds->TurnOff(LED_RED);
+			leds->TurnOn(LED_GREEN);
+			leds->TurnOff(LED_BLUE);
 			SmartDashboard::PutNumber("Greater than 5", 0);
 			SmartDashboard::PutNumber("Less than -5", 0);
 			SmartDashboard::PutNumber("Right on, dude!", 1);
@@ -48,9 +48,9 @@ void DirectionWithLED::Execute() {
 		}
 		else
 		{
-			leds->TurnOff(LED_BLUE);
-			leds->TurnOff(LED_GREEN);
 			leds->TurnOff(LED_RED);
+			leds->TurnOff(LED_GREEN);
+			leds->TurnOff(LED_BLUE);
 			SmartDashboard::PutNumber("I got nothing, man", 1);
 		}
 }
