@@ -1,5 +1,6 @@
 #include "LEDController.h"
 #include "../RobotMap.h"
+#include "../Commands/DirectionWithLED.h"
 
 LEDController::LEDController() : Subsystem("LEDController")
 {
@@ -11,7 +12,7 @@ LEDController::LEDController() : Subsystem("LEDController")
 void LEDController::InitDefaultCommand()
 {
 	// Set the default command for a subsystem here.
-	//SetDefaultCommand(new MySpecialCommand());
+	SetDefaultCommand(new DirectionWithLED());
 }
 
 // Put methods for controlling this subsystem

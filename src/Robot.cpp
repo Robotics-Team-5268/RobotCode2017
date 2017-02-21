@@ -51,11 +51,13 @@ void Robot::TeleopInit() {
 	}
 	CommandBase::drive->getGyro()->Reset();
 	CommandBase::oi->setLiftDirection(1);
+	CommandBase::leds->TurnOn(LED_MASTER);
 }
 
 void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 	CommandBase::drive->AddSmartDashboardItems();
+	CommandBase::sighting->readTable();
 	//CommandBase::sighting->findBoardAngle();
 }
 

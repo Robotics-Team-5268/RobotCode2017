@@ -19,11 +19,12 @@ public:
 	void readTable();
 	bool TwoTargetsAvailable();
 	double getCenterX();
+	double distanceFromTarget();
 	double d1;
 	double d2;
 	double boardAng;
 
-	std::vector<double> solidity, area, centerX, centerY, height, width;
+	std::vector<double> area, centerX, centerY, height, width;
 };
 
 #endif  // Sighting_H
