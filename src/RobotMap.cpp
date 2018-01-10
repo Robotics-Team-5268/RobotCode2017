@@ -1,7 +1,7 @@
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 #include "PIDController.h"
-#include "CANTalon.h"
+#include "SpeedController.h"
 
 std::shared_ptr<SpeedController> RobotMap::speedControllerFL;
 std::shared_ptr<SpeedController> RobotMap::speedControllerFR;
@@ -14,7 +14,7 @@ std::shared_ptr<RobotDrive> RobotMap::driveRobotDrive4;
 std::shared_ptr<Sighting> RobotMap::sighting;
 
  std::shared_ptr<ADXRS450_Gyro> RobotMap::driveGyro;
-//std::shared_ptr<AnalogGyro> RobotMap::driveGyro;
+//std::shared_ptr<AnalogGyro> RobotMap::driveGyro;s
 
 std::shared_ptr<Relay> RobotMap::ledRelay[3];
 
@@ -23,23 +23,23 @@ std::shared_ptr<Sighting> sighting;
 void RobotMap::init() {
     LiveWindow *lw = LiveWindow::GetInstance();
 
-    speedControllerFL.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_FL_CHANNEL));
-    lw->AddActuator("Drive", "Speed Controller FL", (CANTalon&) speedControllerFL);
+    speedControllerFL.reset(new WPI_TalonSRX(DRIVE_SPEED_CONTROLLER_FL_CHANNEL));
+    // lw->AddActuator("Drive",  "Speed Controller FL", (TalonSRX&) speedControllerFL);
     
-    speedControllerFR.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_FR_CHANNEL));
-    lw->AddActuator("Drive", "Speed Controller FR", (CANTalon&) speedControllerFR);
+    speedControllerFR.reset(new WPI_TalonSRX(DRIVE_SPEED_CONTROLLER_FR_CHANNEL));
+    // lw->AddActuator("Drive", "Speed Controller FR", (TalonSRX&) speedControllerFR);
     
-    speedControllerBL.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_BL_CHANNEL));
-    lw->AddActuator("Drive", "Speed Controller BL", (CANTalon&) speedControllerBL);
+    speedControllerBL.reset(new WPI_TalonSRX(DRIVE_SPEED_CONTROLLER_BL_CHANNEL));
+    // lw->AddActuator("Drive", "Speed Controller BL", (TalonSRX&) speedControllerBL);
     
-    speedControllerBR.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_BR_CHANNEL));
-    lw->AddActuator("Drive", "Speed Controller BR", (CANTalon&) speedControllerBR);
+    speedControllerBR.reset(new WPI_TalonSRX(DRIVE_SPEED_CONTROLLER_BR_CHANNEL));
+    // lw->AddActuator("Drive", "Speed Controller BR", (TalonSRX&) speedControllerBR);
     
-    speedControllerLift1.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_LIFT_CHANNEL_1));
-        lw->AddActuator("Lift", "Speed Controller Lift", (CANTalon&) speedControllerLift1);
+    speedControllerLift1.reset(new WPI_TalonSRX(DRIVE_SPEED_CONTROLLER_LIFT_CHANNEL_1));
+    // lw->AddActuator("Lift", "Speed Controller Lift", (TalonSRX&) speedControllerLift1);
 
-	speedControllerLift2.reset(new CANTalon(DRIVE_SPEED_CONTROLLER_LIFT_CHANNEL_2));
-		  lw->AddActuator("Lift", "Speed Controller Lift", (CANTalon&) speedControllerLift1);
+	speedControllerLift2.reset(new WPI_TalonSRX(DRIVE_SPEED_CONTROLLER_LIFT_CHANNEL_2));
+	// lw->AddActuator("Lift", "Speed Controller Lift", (TalonSRX&) speedControllerLift1);
 
     driveRobotDrive4.reset(new RobotDrive(speedControllerFL, speedControllerBL,
               speedControllerFR, speedControllerBR));

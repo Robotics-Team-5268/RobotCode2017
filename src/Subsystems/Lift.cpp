@@ -2,23 +2,22 @@
 #include "../RobotMap.h"
 #include "../CommandBase.h"
 #include "../Commands/LiftWithButton.h"
-#include <CANTalon.h>
 
 Lift::Lift() : Subsystem("Lift") {
 	speedController1 = RobotMap::speedControllerLift1;
 	speedController2 = RobotMap::speedControllerLift2;
-	((CANTalon*)speedController1.get())->SetPosition(0);
+	dynamic_cast<WPI_TalonSRX*>(speedController1.get())->Set(ctre::phoenix::motorcontrol::ControlMode::Position, 0);
 }
 
 void Lift::takeInput(bool ForR){
 	bool buttonA = CommandBase::oi->getDriverButtonPressed(4);
 
-	SmartDashboard::PutNumber("Encoder Position",((CANTalon*)speedController1.get())->GetEncPosition());
+	// SmartDashboard::PutNumber("Encoder Position",((TalonSRX*)speedController1.get())->GetEncPosition());
 	//State machine
-	if(((CANTalon*)speedController1.get())->GetOutputCurrent() >= 15){
+	if(dynamic_cast<WPI_TalonSRX*>(speedController1.get())->GetOutputCurrent() >= 15){
 		if(getclimbing_rope()==false){
 			setclimbing_rope(true);
-			((CANTalon*)speedController1.get())->SetPosition(0);
+			dynamic_cast<WPI_TalonSRX*>(speedController1.get())->Set(ctre::phoenix::motorcontrol::ControlMode::Position, 0);
 		}
 	}
 	if(ForR)

@@ -4,6 +4,7 @@
 #include "WPILib.h"
 #include "RobotParameters.h"
 #include "Subsystems/Sighting.h"
+#include "ctre/Phoenix.h"
 
 class RobotMap {
 public:
