@@ -20,7 +20,7 @@ OI::OI() {
     driverBtns[2]->WhenPressed(new LED(LED_MASTER));
     driverBtns[3]->WhenPressed(new LED(LED_BLUE));
 
-    // SmartDashboard Buttons
+    // SmartDashboard Buttons - don't seem to work
     SmartDashboard::PutData("Rotate", new Rotate(90));
     SmartDashboard::PutData("Move", new Move(3, .3));
     SmartDashboard::PutData("Cam Light", new LED(LED_CAMERA));

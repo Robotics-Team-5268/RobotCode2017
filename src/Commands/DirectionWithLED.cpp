@@ -15,14 +15,13 @@ void DirectionWithLED::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void DirectionWithLED::Execute() {
-	SmartDashboard::PutNumber("Board Angle", sighting->findBoardAngle());
-	if(sighting->findBoardAngle() > 5.0) {
+	if(sighting->findSightingAngle() > 5.0) {
 		leds->TurnOff(LED_BLUE);
 		leds->TurnOff(LED_GREEN);
 		leds->TurnOn(LED_RED);
 
 	}
-	else if(sighting->findBoardAngle() < -5.0) {
+	else if(sighting->findSightingAngle() < -5.0) {
 		leds->TurnOff(LED_RED);
 		leds->TurnOff(LED_GREEN);
 		leds->TurnOn(LED_BLUE);

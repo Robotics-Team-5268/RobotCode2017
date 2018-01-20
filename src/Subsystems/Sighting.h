@@ -4,6 +4,12 @@
 #include <Commands/Subsystem.h>
 #include "WPILib.h"
 
+#include <atomic>
+#include <chrono> // May not be needed
+#include <cstdint>
+#include <iomanip>
+#include <thread>
+
 class Sighting : public Subsystem {
 private:
 	// It's desirable that everything possible under private except
@@ -13,7 +19,9 @@ private:
 public:
 	Sighting();
 	void InitDefaultCommand();
-	double findBoardAngle();
+	void cleanContours();
+	double findSightingAngle();
+	double findPositionAngle();
 	bool LeftOrRight();
 	double DistanceToTarget();
 	void readTable();
@@ -23,6 +31,7 @@ public:
 	double d1;
 	double d2;
 	double boardAng;
+	double pixelWidth1, pixelWidth2;
 
 	std::vector<double> area, centerX, centerY, height, width;
 };

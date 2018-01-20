@@ -1,5 +1,6 @@
 #include "RadialDrive.h"
-
+//radial drive needs to do two things. it needs to turn to directly face the target,
+//then move from our current position to a position directly in front of the target
 RadialDrive::RadialDrive(){
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
@@ -28,7 +29,7 @@ void RadialDrive::Execute() {
 			SmartDashboard::PutNumber("F", pidAngle->GetF());
 
 			sighting->readTable();
-			pidAngle->SetSetpoint(drive->getGyro()->GetAngle() - sighting->findBoardAngle());
+			pidAngle->SetSetpoint(drive->getGyro()->GetAngle() - sighting->findSightingAngle());
 		}else{
 			pidAngle = new PIDController(
 								SmartDashboard::GetNumber("P", .03),

@@ -7,24 +7,20 @@ std::unique_ptr<Drive> CommandBase::drive;
 std::unique_ptr<LEDController> CommandBase::leds;
 std::unique_ptr<Lift> CommandBase::lift;
 std::unique_ptr<Sighting> CommandBase::sighting;
+std::unique_ptr<UDPReceiver> CommandBase::udp;
 
-CommandBase::CommandBase(const std::string &name) :
-		Command(name)
-{
+CommandBase::CommandBase(const std::string &name) : Command(name) {
 }
 
-CommandBase::CommandBase() :
-		Command()
-{
-
+CommandBase::CommandBase() : Command() {
 }
 
-void CommandBase::init()
-{
+void CommandBase::init() {
 	drive.reset(new Drive());
 	leds.reset(new LEDController());
 	lift.reset(new Lift());
 	sighting.reset(new Sighting());
+	udp.reset(new UDPReceiver());
 	// Keep at the end
 	oi.reset(new OI());
 }

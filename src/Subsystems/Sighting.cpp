@@ -19,19 +19,23 @@ Sighting::Sighting() : Subsystem("Sighting"), gyro( nullptr ) {
 void Sighting::InitDefaultCommand() {
 	// Set the default command for a subsystem here.
 }
-double Sighting::findBoardAngle() {
-	//readTable(); // REMOVE THIS LATER (called in TeleopPeriodic and AutonomousPeriodic)
 
-	int pixelHeight1 = 0; //from contours table
-	int pixelHeight2 = 0; //from contours table
+/*
+ * Handles split contours and contours that
+ * are unreasonably different in size
+ */
+void Sighting::cleanContours() {
+	//if (area.size() < 1) return 0; // No contours
 
+	// This for loop checks
+	// if there is a set of broken contours from the peg
+	// by seeing if their X values are close to each other
+	// Commented out because it doesn't do anything because
+	// output is never used. It should merge the contours.
+
+	/*
 	int topCutContour = 0;
 	int bottomCutContour = 0;
-
-	if (area.size() < 1) return 0; // No contours
-
-	// checks if there is a set of broken contours from the peg
-	// by seeing if their X values are close to each other
 
 	for (uint i = 0; i < area.size(); i++) { // area.size() gives the number of contours
 		for (uint j = i + 1; j < area.size(); j++) {
@@ -49,23 +53,87 @@ double Sighting::findBoardAngle() {
 				j = area.size();
 			}
 		}
-	}
+	}*/
 
 
-	// this runs through all of the contours
-	// and ensures that they are at similar heights
-	// and that they are similar in area
+	// This for loop runs through all of the contours and ensures that they
+	// are at similar heights and that they are similar in area
+
+	pixelWidth1 = 0;
+	pixelWidth2 = 0;
 
 	for (uint i = 0; i < area.size(); i++) { // area.size() gives the number of contours
 		for (uint j = i + 1; j < area.size(); j++) {
 			if (fabs(centerY[j] - centerY[i]) < Y_ERROR_MARGIN && //Check if within margin of error
 					(area[j] - area[i]) / area[j] < AREA_ERROR_MARGIN) {
 				if (centerX[j] > centerX[i]) { // Find the left contour
-					pixelHeight1 = width[i];
-					pixelHeight2 = width[j];
+					pixelWidth1 = width[i];
+					pixelWidth2 = width[j];
 				} else {
-					pixelHeight2 = width[i];
-					pixelHeight1 = width[j];
+					pixelWidth2 = width[i];
+					pixelWidth1 = width[j];
+				}
+				frc::SmartDashboard::PutNumber("Countours Fit", 1);
+				i = area.size(); // jump to end of loop
+				j = area.size();
+			}
+		}
+	}
+
+	frc::SmartDashboard::PutNumber("Pixel Width 1", pixelWidth1);
+	frc::SmartDashboard::PutNumber("Pixel Width 2", pixelWidth2);
+}
+
+double Sighting::findSightingAngle() {
+
+	int pixelWidth1 = 0; //from contours table
+	int pixelWidth2 = 0; //from contours table
+
+	int topCutContour = 0;
+	int bottomCutContour = 0;
+
+	frc::SmartDashboard::PutNumber("Total Contours", area.size());
+
+	if (area.size() < 1) return 0; // No contours
+
+	// This for loop
+	// checks if there is a set of broken contours from the peg
+	// by seeing if their X values are close to each other
+	// Commented out because it doesn't do anything because
+	// output is never used. It should merge the contours.
+
+	/*for (uint i = 0; i < area.size(); i++) { // area.size() gives the number of contours
+		for (uint j = i + 1; j < area.size(); j++) {
+			// Check if within margin of error (meaning the contour are too close together)
+			// This should mean the spring is splitting a contour into two on top of each other
+			if (fabs(centerX[j] - centerX[i]) < X_ERROR_MARGIN) {
+				if (centerY[j] > centerY[i]) { // Find the top contour
+					topCutContour = j;
+					bottomCutContour = i;
+				} else {
+					bottomCutContour = j;
+					topCutContour = i;
+				}
+				i = area.size(); // jump to end of loop
+				j = area.size();
+			}
+		}
+	}*/
+
+
+	// This for loop runs through all of the contours and ensures that they
+	// are at similar heights and that they are similar in area
+
+	for (uint i = 0; i < area.size(); i++) { // area.size() gives the number of contours
+		for (uint j = i + 1; j < area.size(); j++) {
+			if (fabs(centerY[j] - centerY[i]) < Y_ERROR_MARGIN && //Check if within margin of error
+					(area[j] - area[i]) / area[j] < AREA_ERROR_MARGIN) {
+				if (centerX[j] > centerX[i]) { // Find the left contour
+					pixelWidth1 = width[i];
+					pixelWidth2 = width[j];
+				} else {
+					pixelWidth2 = width[i];
+					pixelWidth1 = width[j];
 	 			}
 				frc::SmartDashboard::PutNumber("Countours Fit", 1);
 				i = area.size(); // jump to end of loop
@@ -74,43 +142,52 @@ double Sighting::findBoardAngle() {
 		}
 	}
 
-	frc::SmartDashboard::PutNumber("Pixel Height 1", pixelHeight1);
-	frc::SmartDashboard::PutNumber("Pixel Height 2", pixelHeight2);
+	frc::SmartDashboard::PutNumber("Pixel Width 1", pixelWidth1);
+	frc::SmartDashboard::PutNumber("Pixel Width 2", pixelWidth2);
 
-/*	if (pixelHeight1 != 0 && pixelHeight2 != 0) {
-		d1 = 2 * xres / (2 * pixelHeight1 * tan(horiAng)); // distance to left contour
-		frc::SmartDashboard::PutNumber("Distance 1", d1);
-		d2 = 2 * xres / (2 * pixelHeight2 * tan(horiAng)); // distance to right contour
-		frc::SmartDashboard::PutNumber("Distance 2", d2);
-		boardAng = (asin((d2 - d1) / KHyp)/ 3.14159265) * 180; // positive if left of target, negative if right
-		frc::SmartDashboard::PutNumber("Board Angle", boardAng);
-		return boardAng;
-	}
-	//return 0.0;
-*/
-	// 8.5in is for the distance from center to center from goal, then divide by the length between centers in pixels to get proportion
-	const double constant = KHyp / abs(centerX[0] - centerX[1]);
+	frc::SmartDashboard::PutNumber("First centerX", centerX[0]); //#
+
+	// KHyp is 8.5in (the distance from center to center of contours)
+	// Divide by the length between centers in pixels to get inches per pixel
+	const double inPerPx = KHyp / abs(centerX[0] - centerX[1]);
 	double angleToGoal = 0;
 	// this calculates the distance from the center of goal to center of webcam
-	double distanceFromCenterPixels= ((centerX[0] + centerX[1]) / 2) - (CAMERA_XRES / 2);
+	double distanceFromCenterPixels = ((centerX[0] + centerX[1]) / 2) - (CAMERA_XRES / 2);
 	// Converts pixels to inches using the constant from above.
-	double distanceFromCenterInch = distanceFromCenterPixels * constant;
+	double distanceFromCenterInch = distanceFromCenterPixels * inPerPx;
 	// math brought to you buy Chris and Jones
 	angleToGoal = atan(distanceFromCenterInch / distanceFromTarget());
 	angleToGoal = (angleToGoal / 3.14159265) * 180;
 	frc::SmartDashboard::PutNumber("Angle To Goal", angleToGoal);
 	return angleToGoal;
-
 }
+
+/*
+ * Finds the angle the robot is positioned relative to the target on
+ * the ground. If the robot is directly in front of the target,
+ * such that both contours are the same size, it will be zero.
+ * NOTE: Does not work yet
+ */
+double Sighting::findPositionAngle() {
+	cleanContours();
+
+	if (pixelWidth1 != 0 && pixelWidth2 != 0) {
+		d1 = 2 * xres / (2 * pixelWidth1 * tan(horiAng)); // distance to left contour
+		frc::SmartDashboard::PutNumber("Distance 1", d1);
+		d2 = 2 * xres / (2 * pixelWidth2 * tan(horiAng)); // distance to right contour
+		frc::SmartDashboard::PutNumber("Distance 2", d2);
+		boardAng = (asin((d2 - d1) / KHyp)/ 3.14159265) * 180; // positive if left of target, negative if right
+		frc::SmartDashboard::PutNumber("Board Angle", boardAng);
+		return boardAng;
+	}
+	else return 0;
+}
+
 bool Sighting::LeftOrRight() {
 	// true if right of target, false if left of target
-	return (Sighting::findBoardAngle() < 0.0);
+	return (Sighting::findSightingAngle() < 0.0);
 }
 
-double Sighting::DistanceToTarget() {
-	int pixelHeight = 0; // get from countours report
-	return 5 * 480 / (2 * pixelHeight * tan(33.69));
-}
 double Sighting::distanceFromTarget(){
 		// distance costant divided by length between centers of contours
 		double lengthBetweenContours = (centerX[0] - centerX[1]) / 2;

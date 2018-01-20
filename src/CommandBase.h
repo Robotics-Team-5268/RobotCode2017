@@ -9,6 +9,7 @@
 #include "Subsystems/LEDController.h"
 #include "Subsystems/Lift.h"
 #include "Subsystems/Sighting.h"
+#include "Subsystems/UDPReceiver.h"
 #include <networktables/NetworkTable.h>
 
 /**
@@ -16,8 +17,7 @@
  * CommandBase stores creates and stores each control system. To access a
  * subsystem elsewhere in your code in your code use CommandBase.examplesubsystem
  */
-class CommandBase: public Command
-{
+class CommandBase: public Command {
 public:
 	CommandBase(const std::string &name);
 	CommandBase();
@@ -28,6 +28,7 @@ public:
 	static std::unique_ptr<LEDController> leds;
 	static std::unique_ptr<Lift> lift;
 	static std::unique_ptr<Sighting> sighting;
+	static std::unique_ptr<UDPReceiver> udp;
 };
 
 #endif
