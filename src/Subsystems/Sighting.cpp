@@ -145,7 +145,7 @@ double Sighting::findSightingAngle() {
 	frc::SmartDashboard::PutNumber("Pixel Width 1", pixelWidth1);
 	frc::SmartDashboard::PutNumber("Pixel Width 2", pixelWidth2);
 
-	frc::SmartDashboard::PutNumber("First centerX", centerX[0]); //#
+	frc::SmartDashboard::PutNumber("First centerX NT", centerX[0]);
 
 	// KHyp is 8.5in (the distance from center to center of contours)
 	// Divide by the length between centers in pixels to get inches per pixel
@@ -197,14 +197,17 @@ double Sighting::distanceFromTarget(){
 //Update networktable and fill ContoursReport vectors
 void Sighting::readTable()
 {
-	this->networktable = NetworkTable::GetTable("roboRIO-5268-frc.local");
+	/*this->networktable = NetworkTable::GetTable("roboRIO-5268-frc.local");
 
 	area = networktable->GetNumberArray("area", llvm::ArrayRef<double>());
 	centerX = networktable->GetNumberArray("centerX", llvm::ArrayRef<double>());
 	centerY = networktable->GetNumberArray("centerY", llvm::ArrayRef<double>());
 	height = networktable->GetNumberArray("height", llvm::ArrayRef<double>());
-	width = networktable->GetNumberArray("width", llvm::ArrayRef<double>());
-	if (TwoTargetsAvailable()){
+	width = networktable->GetNumberArray("width", llvm::ArrayRef<double>());*/
+
+	CommandBase::udp->GetContours(centerX, centerY, width, height, area);
+
+	if (TwoTargetsAvailable()) {
 		frc::SmartDashboard::PutNumber("distance between contours", centerX[0] - centerX[1]);
 	}
 }

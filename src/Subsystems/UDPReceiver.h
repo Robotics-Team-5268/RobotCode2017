@@ -5,8 +5,10 @@
 #include "WPIlib.h"
 
 #include <atomic>
-#include <cstdint>
 #include <thread>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 
 class UDPReceiver : public Subsystem {
 
@@ -15,20 +17,31 @@ private:
 	// for methods that implement subsystem capabilities
 
 	void ThreadBody();
+	std::vector<std::string> split(std::string str, std::string delimiter);
+	int strToInt(std::string str);
 
 	// The order of these is important
 	// So the thread doesn't start before everything's ready
 	std::atomic_int mCounter;
 	std::atomic_bool mRun;
 	std::thread mThread;
+	int sockfd;
+	char buffer[256]; // Don't access this outside of receive
 
 public:
 	UDPReceiver();
 	~UDPReceiver();
 	void InitDefaultCommand();
-	uint32_t GetCount() const;
-	void StopThread();
+	int GetCount() const; // Temporary
+	void GetContours( // Switch to int vectors later
+			std::vector<double>& centerX_out,
+			std::vector<double>& centerY_out,
+			std::vector<double>& width_out,
+			std::vector<double>& height_out,
+			std::vector<double>& area_out);
 	void AddSmartDashboardItems();
+	// May become private later
+	std::vector<int> area, centerX, centerY, height, width;
 
 };
 
