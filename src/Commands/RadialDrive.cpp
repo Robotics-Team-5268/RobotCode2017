@@ -8,7 +8,7 @@ RadialDrive::RadialDrive(){
 	Command::Requires(sighting.get());
 	pidAngle = nullptr;
 	pidDistance = nullptr;
-	if(sighting->TwoTargetsAvailable())
+	if(sighting->TwoContoursAvailable())
 		theDistancePID.reset(new RadialDriveDistancePIDOut(sighting.get()));
 	else
 		Cancel();
@@ -29,7 +29,7 @@ void RadialDrive::Execute() {
 			SmartDashboard::PutNumber("F", pidAngle->GetF());
 
 			sighting->readTable();
-			pidAngle->SetSetpoint(drive->getGyro()->GetAngle() - sighting->findSightingAngle());
+			pidAngle->SetSetpoint(drive->getGyro()->GetAngle() - sighting->findFacingAngle());
 		}else{
 			pidAngle = new PIDController(
 								SmartDashboard::GetNumber("P", .03),

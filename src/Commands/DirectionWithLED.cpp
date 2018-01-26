@@ -15,18 +15,21 @@ void DirectionWithLED::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void DirectionWithLED::Execute() {
-	if(sighting->findSightingAngle() > 5.0) {
+	double sightingAngle = sighting->findFacingAngle();
+	double distance = sighting->distanceFromTarget();
+
+	/*if(sightingAngle > 5.0) {
 		leds->TurnOff(LED_BLUE);
 		leds->TurnOff(LED_GREEN);
 		leds->TurnOn(LED_RED);
 
 	}
-	else if(sighting->findSightingAngle() < -5.0) {
+	else if(sightingAngle < -5.0) {
 		leds->TurnOff(LED_RED);
 		leds->TurnOff(LED_GREEN);
 		leds->TurnOn(LED_BLUE);
 	}
-	else if(sighting->TwoTargetsAvailable()) {
+	else if(sighting->TwoContoursAvailable()) {
 		leds->TurnOff(LED_RED);
 		leds->TurnOn(LED_GREEN);
 		leds->TurnOff(LED_BLUE);
@@ -35,7 +38,7 @@ void DirectionWithLED::Execute() {
 		leds->TurnOff(LED_RED);
 		leds->TurnOff(LED_GREEN);
 		leds->TurnOff(LED_BLUE);
-	}
+	}*/
 }
 
 // Make this return true when this Command no longer needs to run execute()

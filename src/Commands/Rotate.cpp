@@ -25,15 +25,15 @@ void Rotate::Execute() {
 		SmartDashboard::PutNumber("F", pid->GetF());
 	}else{
 		pid = new PIDController(
-							SmartDashboard::GetNumber("P", .03),
-							SmartDashboard::GetNumber("I", .005),
-							SmartDashboard::GetNumber("D", .01),
+							SmartDashboard::GetNumber("P", .033), // was .03
+							SmartDashboard::GetNumber("I", .00), // was .005
+							SmartDashboard::GetNumber("D", .006), // was .01
 							SmartDashboard::GetNumber("F", 0),
 							drive->getGyro(),
 							new RotatePIDOutput());
 		pid->SetInputRange(-180, 180);
-		pid->SetOutputRange(-.75, .75);
-		pid->SetAbsoluteTolerance(3);
+		pid->SetOutputRange(-.5, .5); // was -.75, .75
+		pid->SetAbsoluteTolerance(1); // was 3
 		pid->Enable();
 		pid->SetSetpoint(degrees);
 	}

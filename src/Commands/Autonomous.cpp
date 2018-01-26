@@ -6,7 +6,20 @@
 #include "Robot.h"
 #include "LED.h"
 
+// Temporary, for delay
+#include <thread>
+#include <chrono>
+
 Autonomous::Autonomous(int selection) : CommandGroup("Autonomous") {
+
+	// 2 second delay so vision is ready to go
+	//std::this_thread::sleep_for(std::chrono::seconds(2));
+
+	//double angle = CommandBase::sighting->findFacingAngle();
+
+	//SmartDashboard::PutNumber("Testing turn", 45);
+	double angle = SmartDashboard::GetNumber("Testing turn", 45);
+
 	switch(selection){
 	case 1: //right
 		//forward, turn right, aim, forward
@@ -27,6 +40,9 @@ Autonomous::Autonomous(int selection) : CommandGroup("Autonomous") {
 		AddSequential(new Rotate(45));
 		AddSequential(new RadialDrive());
 		AddSequential(new Move(0.5, 1.0));
+		break;
+	case 4: // Testing
+		AddSequential(new Rotate(angle));
 		break;
 	default:
 		break;

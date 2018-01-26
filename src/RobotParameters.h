@@ -26,16 +26,18 @@
 #define LED_CAMERA 1
 #define LED_GREEN 2
 #define LED_BLUE 3
-#define LED_SPARE 4
-#define LED_MASTER 5
+#define LED_SPARE 4 // Not plugged into anything
+#define LED_MASTER 5 // Turns off red, green, and blue (but not camera I think)
+// SPIKE1 (middle) connected to relay PIN 0
+// SPIKE2 (top) conneted to relay PIN 1
+// SPIKE3 (bottom) conneted to relay PIN 2
+// SPIKE3 M- is unused
 
+// One of many places the speed controllers get inverted
 #define SCFL_INVERTED true
 #define SCBL_INVERTED true
 #define SCFR_INVERTED false
 #define SCBR_INVERTED false
-
-#define CAMERA_XRES 640
-#define CAMERA_YRES 480
 
 #define X_ORIGIN_OFFSET .5 //Scale from -1,1
 

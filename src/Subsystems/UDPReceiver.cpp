@@ -7,11 +7,10 @@
 
 using namespace std;
 
-// Constructor
+// Constructor - sets up the socket to receive
 UDPReceiver::UDPReceiver() : Subsystem("UDPReceiver")
 	// Initializer list - This weird syntax functions the same as:
 	// mRun = true;
-	, mCounter(0)
 	, mRun(true)
 	, mThread(&UDPReceiver::ThreadBody, this)
 	//, buffer()
@@ -47,10 +46,6 @@ UDPReceiver::~UDPReceiver() {
 	}
 }
 
-int UDPReceiver::GetCount() const {
-	return mCounter;
-}
-
 // Called by sighting with references to arrays
 void UDPReceiver::GetContours(vector<double>& centerX_out,
 							  vector<double>& centerY_out,
@@ -70,10 +65,6 @@ void UDPReceiver::GetContours(vector<double>& centerX_out,
 // Runs continuously in the background
 void UDPReceiver::ThreadBody() {
 	while (mRun) {
-		// Testing
-		mCounter++;
-		frc::SmartDashboard::PutNumber("mCounter", mCounter);
-
 		int rc = recv(sockfd, buffer, sizeof(buffer), 0);
 		frc::SmartDashboard::PutBoolean("Error reading from socket", (rc < 0));
 

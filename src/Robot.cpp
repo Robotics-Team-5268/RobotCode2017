@@ -30,8 +30,9 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	RobotMap::driveGyro->Reset();
+	CommandBase::leds->TurnOn(LED_CAMERA);
 	int* selection = autonomousChooser->GetSelected();
-	autonomousCommand.reset(new Autonomous(2));// replace with selection
+	autonomousCommand.reset(new Autonomous(4));// replace with selection
 	autonomousCommand->Start();
 }
 

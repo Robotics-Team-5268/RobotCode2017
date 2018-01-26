@@ -15,17 +15,16 @@ private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
 	std::shared_ptr<ADXRS450_Gyro> gyro;
-	std::shared_ptr<NetworkTable> networktable;
 public:
 	Sighting();
 	void InitDefaultCommand();
 	void cleanContours();
-	double findSightingAngle();
+	double findFacingAngle();
 	double findPositionAngle();
 	bool LeftOrRight();
 	double DistanceToTarget();
 	void readTable();
-	bool TwoTargetsAvailable();
+	bool TwoContoursAvailable();
 	double getCenterX();
 	double distanceFromTarget();
 	double d1;

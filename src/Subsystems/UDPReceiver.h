@@ -22,7 +22,6 @@ private:
 
 	// The order of these is important
 	// So the thread doesn't start before everything's ready
-	std::atomic_int mCounter;
 	std::atomic_bool mRun;
 	std::thread mThread;
 	int sockfd;
