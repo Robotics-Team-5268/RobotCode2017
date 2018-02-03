@@ -38,8 +38,12 @@ void Drive::InitDefaultCommand() {
 void Drive::takeInput(){
 	float X = -CommandBase::oi->getDriverJoystick()->GetX();
 	float Y = -CommandBase::oi->getDriverJoystick()->GetY();
-	float rotateAmt = CommandBase::oi->getDriverJoystick()->GetRawAxis(LEFT_TRIGGER) - CommandBase::oi->getDriverJoystick()->GetRawAxis(RIGHT_TRIGGER);
+	//float rotateAmt = CommandBase::oi->getDriverJoystick()->GetRawAxis(LEFT_TRIGGER) - CommandBase::oi->getDriverJoystick()->GetRawAxis(RIGHT_TRIGGER);
 
+	// Left turn on controller is borked
+	//float rotateAmt = 0 - CommandBase::oi->getDriverJoystick()->GetRawAxis(RIGHT_TRIGGER);
+
+	float rotateAmt = -CommandBase::oi->getDriverJoystick()->GetRawAxis(4);
 
 	robotDrive4->MecanumDrive_Cartesian(X, Y, rotateAmt);
 }

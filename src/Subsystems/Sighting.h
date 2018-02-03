@@ -20,8 +20,6 @@ public:
 	void InitDefaultCommand();
 	void cleanContours();
 	double findFacingAngle();
-	double findPositionAngle();
-	bool LeftOrRight();
 	double DistanceToTarget();
 	void readTable();
 	bool TwoContoursAvailable();

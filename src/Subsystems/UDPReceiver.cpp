@@ -88,12 +88,13 @@ void UDPReceiver::ThreadBody() {
 
 				// centerX, centerY, etc, for the current contour
 				vector<string> properties = split(contours[i], ",");
-
-				centerX.push_back(strToInt(properties[0]));
-				centerY.push_back(strToInt(properties[1]));
-				width.push_back(strToInt(properties[2]));
-				height.push_back(strToInt(properties[3]));
-				area.push_back(strToInt(properties[4]));
+				if (properties.size() >= 5) {
+					centerX.push_back(strToInt(properties[0]));
+					centerY.push_back(strToInt(properties[1]));
+					width.push_back(strToInt(properties[2])); // Crashed here once when super close to target in teleop
+					height.push_back(strToInt(properties[3]));
+					area.push_back(strToInt(properties[4]));
+				}
 			}
 		}
 	}

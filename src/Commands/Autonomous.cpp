@@ -2,6 +2,7 @@
 #include "Autonomous.h"
 #include "Commands/Move.h"
 #include "Commands/Rotate.h"
+#include "Commands/MoveAndRotate.h"
 #include "Commands/RadialDrive.h"
 #include "Robot.h"
 #include "LED.h"
@@ -13,12 +14,12 @@
 Autonomous::Autonomous(int selection) : CommandGroup("Autonomous") {
 
 	// 2 second delay so vision is ready to go
-	//std::this_thread::sleep_for(std::chrono::seconds(2));
+	std::this_thread::sleep_for(std::chrono::seconds(3));
 
-	//double angle = CommandBase::sighting->findFacingAngle();
+	double angle = CommandBase::sighting->findFacingAngle();
 
 	//SmartDashboard::PutNumber("Testing turn", 45);
-	double angle = SmartDashboard::GetNumber("Testing turn", 45);
+	//double angle = SmartDashboard::GetNumber("Testing turn", 45);
 
 	switch(selection){
 	case 1: //right
@@ -42,7 +43,12 @@ Autonomous::Autonomous(int selection) : CommandGroup("Autonomous") {
 		AddSequential(new Move(0.5, 1.0));
 		break;
 	case 4: // Testing
-		AddSequential(new Rotate(angle));
+		//AddSequential(new Rotate(angle));
+		AddSequential(new MoveAndRotate());
+		AddSequential(new Move(.5, 1.5));
+		// Turn until gyro close to zero
+		AddSequential(new Rotate(0));
+		//AddSequential(new Move(0.5, 2.0));
 		break;
 	default:
 		break;

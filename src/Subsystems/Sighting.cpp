@@ -31,7 +31,7 @@ void Sighting::InitDefaultCommand() {
  * are unreasonably different in size (in theory, not in practice)
  */
 void Sighting::cleanContours() {
-	//if (area.size() < 1) return 0; // No contours
+	//if (area.size() < 1) return -1; // No contours
 
 	// This for loop checks
 	// if there is a set of broken contours from the peg
@@ -110,40 +110,8 @@ double Sighting::findFacingAngle() {
 		frc::SmartDashboard::PutNumber("Angle To Goal", angleToGoal);
 		return angleToGoal;
 	}
-	else return 0;
-}
-
-/*
- * Finds the angle the robot is positioned relative to the target on
- * the ground. If the robot is directly in front of the target,
- * such that both contours are the same size, it will be zero.
- * NOTE: Does not work yet
- */
-double Sighting::findPositionAngle() {
-	cleanContours();
-
-	if (pixelWidth1 != 0 && pixelWidth2 != 0) {
-		d1 = xres / (pixelWidth1 * tan(horiFOV)); // distance to left contour
-		// d * tan0 = w
-		// d = w / tan0
-		// Target Width is distance between contours
-		// TargetWidthIn[const=8.5] / TargetWidthPx
-		// Distance = TargetWidthIn * TargetWidthPx / tan0
-
-		d2 = xres / (pixelWidth2 * tan(horiFOV)); // distance to right contour
-		boardAng = (asin((d2 - d1) / IN_BETWEEN_CONTOURS)/ 3.14159265) * 180; // positive if left of target, negative if right
-
-		frc::SmartDashboard::PutNumber("Distance 1", d1);
-		frc::SmartDashboard::PutNumber("Distance 2", d2);
-		frc::SmartDashboard::PutNumber("Board Angle", boardAng);
-		return boardAng;
-	}
-	else return 0;
-}
-
-bool Sighting::LeftOrRight() {
-	// true if right of target, false if left of target
-	return (Sighting::findFacingAngle() < 0.0);
+	frc::SmartDashboard::PutNumber("Angle To Goal", -1);
+	return -1;
 }
 
 double Sighting::distanceFromTarget(){
@@ -153,26 +121,20 @@ double Sighting::distanceFromTarget(){
 
 	// Written to assume it's only getting two valid contours
 	if (TwoContoursAvailable()) {
-		/*double leftEdgeOfLeftContour = 0;
-		if (centerX[0] < centerX[1]) { // Contour 0 is left contour
-			leftEdgeOfLeftContour = centerX[0] - (width[0] / 2.0);
-		} else { // Contour 1 is left contour
-			leftEdgeOfLeftContour = centerX[1] - (width[1] / 2.0);
-		}
-
-		double halfTargetAngularWidth = (getCenterX() - leftEdgeOfLeftContour) / xres * horiFOV;
-		double distanceToTarget = IN_TARGET_WIDTH / tan(halfTargetAngularWidth) / MAGIC_NUMBER;*/
-
 		double pxBetweenContours = abs(centerX[0] - centerX[1]);
 		double distanceToTarget = IN_BETWEEN_CONTOURS * xres / (2 * pxBetweenContours * tanHoriFOV) * MAGIC_NUMBER;
 		frc::SmartDashboard::PutNumber("Distance to target", distanceToTarget);
 
-		double xDistance = distanceToTarget * sin((gyro->GetAngle()*3.14159/180.0));
-		frc::SmartDashboard::PutNumber("X Distance", xDistance);
-
+		/*double xDistance = distanceToTarget * sin((gyro->GetAngle()*3.14159/180.0));
+		frc::SmartDashboard::PutNumber("X Distance", xDistance);*/
+		if (distanceToTarget > 200) {
+			frc::SmartDashboard::PutNumber("Distance to target", -1);
+			return -1;
+		}
 		return distanceToTarget;
 	}
-	return 0;
+	frc::SmartDashboard::PutNumber("Distance to target", -1);
+	return -1;
 }
 
 //Update contour vectors
@@ -185,11 +147,11 @@ void Sighting::readTable() {
 }
 
 bool Sighting::TwoContoursAvailable() {
-	return area.size() >= 2; // returns true if there are at least 2 contours
+	return area.size() == 2; // returns true if there are 2 contours
 }
 // Get the center of the whole target by averaging the contours together
 double Sighting::getCenterX() {
 	if (TwoContoursAvailable())
 		return (centerX[0] + centerX[1]) / 2.0;
-	else return 0.0;
+	else return -1.0;
 }
